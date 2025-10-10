@@ -1,8 +1,13 @@
-import "./App.css";
+import { Routes,Route } from 'react-router-dom';
+import TeamFormData from './Pages/TeamFormData';
+import './App.css'
 function App() {
-  return (
+  return(
     <div>
-      Hi
+      <Routes>
+        <Route path='/teamData' element={<TeamFormData/>}/>
+      </Routes>
+
     </div>
   );
 }
