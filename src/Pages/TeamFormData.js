@@ -67,12 +67,6 @@ if (isSubmitted) {
       <p className="text-gray-300 mb-6 text-center text-sm sm:text-base md:text-lg px-4 sm:px-6 md:px-0">
         Your details have been submitted successfully.
       </p>
-      <button
-        onClick={() => setIsSubmitted(false)} // optional: reset form
-        className="bg-[#FFC107] text-black font-semibold py-2 px-6 rounded-md hover:bg-[#e0a800] transition text-sm sm:text-base md:text-lg"
-      >
-        Add Another
-      </button>
     </div>
   );
 }
