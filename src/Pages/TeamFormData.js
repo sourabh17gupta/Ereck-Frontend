@@ -62,7 +62,7 @@ function TeamFormData() {
           Team Member Data
         </h1>
         <p className="text-gray-300 text-sm mt-1">
-          Add details of your team member below
+          Add your details below
         </p>
       </div>
 
