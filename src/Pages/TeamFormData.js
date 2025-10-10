@@ -67,12 +67,6 @@ function FormFillPage() {
         <p className="text-gray-300 mb-6 text-center">
           Your details have been submitted successfully.
         </p>
-        <button
-          onClick={() => setIsSubmitted(false)} // Reset to form
-          className="bg-[#FFC107] text-black font-semibold py-2 px-6 rounded-md hover:bg-[#e0a800] transition"
-        >
-          Add Another
-        </button>
       </div>
     );
   }
