@@ -124,7 +124,7 @@ function FormFillPage() {
             required
           >
             <option value="">Select Team</option>
-            <option value="management">Management</option>
+            <option value="managment">Management</option>
             <option value="design">Design</option>
             <option value="contentwriting">Content Writing</option>
             <option value="core">Core</option>
