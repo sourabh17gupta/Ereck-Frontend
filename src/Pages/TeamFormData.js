@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import { submitTeamMember } from "../api/Services/TeamData";
 
-function TeamFormData() {
+function FormFillPage() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -14,6 +14,7 @@ function TeamFormData() {
   });
 
   const [imagePreview, setImagePreview] = useState(null);
+  const [isSubmitted, setIsSubmitted] = useState(false); // Track submission
 
   function changeHandler(e) {
     const { name, value, type, files } = e.target;
@@ -40,6 +41,7 @@ function TeamFormData() {
     try {
       await submitTeamMember(formData);
       toast.success("Team member added successfully!");
+      setIsSubmitted(true); // Mark as submitted
       setFormData({
         name: "",
         email: "",
@@ -55,6 +57,26 @@ function TeamFormData() {
     }
   };
 
+  // If submitted, show a success page
+  if (isSubmitted) {
+    return (
+      <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-[#1f1b00] via-[#2c2500] to-[#3b3200] text-white p-4">
+        <h1 className="text-4xl font-bold text-[#FFC107] mb-4">
+          Submission Successful!
+        </h1>
+        <p className="text-gray-300 mb-6 text-center">
+          Your details have been submitted successfully.
+        </p>
+        <button
+          onClick={() => setIsSubmitted(false)} // Reset to form
+          className="bg-[#FFC107] text-black font-semibold py-2 px-6 rounded-md hover:bg-[#e0a800] transition"
+        >
+          Add Another
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex flex-col justify-start items-center bg-gradient-to-br from-[#1f1b00] via-[#2c2500] to-[#3b3200] text-white py-8 px-4">
       <div className="mb-4 text-center">
@@ -62,7 +84,7 @@ function TeamFormData() {
           Team Member Data
         </h1>
         <p className="text-gray-300 text-sm mt-1">
-          Add your details below
+          Add details of your team member below
         </p>
       </div>
 
@@ -75,7 +97,7 @@ function TeamFormData() {
         <FormField label="Instagram ID" name="InstagramId" value={formData.InstagramId} onChange={changeHandler} />
         <FormField label="LinkedIn ID" name="LinkdinId" value={formData.LinkdinId} onChange={changeHandler} />
 
-        {/* Position Dropdown (Head / Member) */}
+        {/* Position Dropdown */}
         <div>
           <label className="block mb-1 text-[#FFC107] text-sm font-semibold">Position</label>
           <select
@@ -91,7 +113,7 @@ function TeamFormData() {
           </select>
         </div>
 
-        {/* TeamName Dropdown (Management, Design, Content Writing, Core) */}
+        {/* TeamName Dropdown */}
         <div>
           <label className="block mb-1 text-[#FFC107] text-sm font-semibold">Team Name</label>
           <select
@@ -156,4 +178,4 @@ const FormField = ({ label, type = "text", name, value, onChange }) => (
   </div>
 );
 
-export default TeamFormData;
+export default FormFillPage;
