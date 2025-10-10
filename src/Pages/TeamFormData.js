@@ -58,27 +58,34 @@ function FormFillPage() {
   };
 
   // If submitted, show a success page
-  if (isSubmitted) {
-    return (
-      <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-[#1f1b00] via-[#2c2500] to-[#3b3200] text-white p-4">
-        <h1 className="text-4xl font-bold text-[#FFC107] mb-4">
-          Submission Successful!
-        </h1>
-        <p className="text-gray-300 mb-6 text-center">
-          Your details have been submitted successfully.
-        </p>
-      </div>
-    );
-  }
+if (isSubmitted) {
+  return (
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-[#1f1b00] via-[#2c2500] to-[#3b3200] text-white p-4">
+      <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#FFC107] mb-4 text-center drop-shadow-lg">
+        Submission Successful!
+      </h1>
+      <p className="text-gray-300 mb-6 text-center text-sm sm:text-base md:text-lg px-4 sm:px-6 md:px-0">
+        Your details have been submitted successfully.
+      </p>
+      <button
+        onClick={() => setIsSubmitted(false)} // optional: reset form
+        className="bg-[#FFC107] text-black font-semibold py-2 px-6 rounded-md hover:bg-[#e0a800] transition text-sm sm:text-base md:text-lg"
+      >
+        Add Another
+      </button>
+    </div>
+  );
+}
+
 
   return (
     <div className="min-h-screen flex flex-col justify-start items-center bg-gradient-to-br from-[#1f1b00] via-[#2c2500] to-[#3b3200] text-white py-8 px-4">
       <div className="mb-4 text-center">
         <h1 className="text-3xl font-extrabold text-[#FFC107] drop-shadow-md">
-          Team Member Data
+          Ereck Member Data
         </h1>
         <p className="text-gray-300 text-sm mt-1">
-          Add details of your team member below
+          Add your details below
         </p>
       </div>
 
