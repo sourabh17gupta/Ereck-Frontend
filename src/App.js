@@ -1,15 +1,41 @@
 import { Routes,Route } from 'react-router-dom';
 import TeamFormData from './Pages/TeamFormData';
+import AboutUs from './Pages/AboutUs';
 import './App.css'
-function App() {
-  return(
-    <div>
-      <Routes>
-        <Route path='/teamData' element={<TeamFormData/>}/>
-      </Routes>
+import PrivacyPolicy from './Pages/PrivacyPolicy';
+import TermsAndCondition from './Pages/TermsAndCondition';
+import Home from './Pages/Home'
+import ContactUs from './Pages/ContactUs';
+import EventPage from './Pages/EventPage';
+import Team from './Pages/Team';
+import Error from './Pages/Error';
+import Footer from './component/common/Footter';
+import Gallery from './Pages/Gallery';
+import Navbar from './component/common/Navbar';
 
+function App() {
+  return (
+    <div>
+      <Navbar />
+      {/* Add padding top to push content below navbar */}
+      <div className="pt-20">
+        <Routes>
+          <Route path='/teamData' element={<TeamFormData/>}/>
+          <Route path='/AboutUs' element={<AboutUs/>}/>
+          <Route path='/ContactUs' element={<ContactUs/>}/>
+          <Route path='/Privacy-Policy' element={<PrivacyPolicy/>}/>
+          <Route path='/Terms-and-condition' element={<TermsAndCondition/>}/>
+          <Route path='/' element={<Home/>}/>
+          <Route path='/Team' element={<Team/>}/>
+          <Route path='*' element={<Error/>}/>
+          <Route path='/gallery' element={<Gallery/>}/>
+          <Route path='/event' element={<EventPage/>}/>
+        </Routes>
+      </div>
+      <Footer/>
     </div>
   );
 }
+
 
 export default App;
