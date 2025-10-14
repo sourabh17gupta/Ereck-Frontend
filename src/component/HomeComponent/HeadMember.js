@@ -29,7 +29,7 @@ function HeadMember() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white py-5 px-3 sm:px-8 lg:px-12">
+    <div className="min-h-screen bg-black text-white py-20 px-3 sm:px-8 lg:px-12">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -30 }}
@@ -47,7 +47,7 @@ function HeadMember() {
       </motion.div>
 
       {/* Responsive Grid */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 sm:gap-10 px-2 sm:px-0">
+      <div className="max-w-7xl mx-auto grid grid-cols-1  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8 px-2 sm:px-0">
         {data.map((member, index) => (
           <motion.div
             key={index}
@@ -57,8 +57,8 @@ function HeadMember() {
             viewport={{ once: true }}
             whileHover={{ scale: 1.05, y: -5 }}
             className="relative bg-black/70 backdrop-blur-md border border-gray-700 rounded-xl overflow-hidden shadow-md transition-all duration-300
-                       w-[90%] sm:w-auto sm:max-w-none mx-auto sm:mx-0
-                       h-[28rem] sm:h-[28rem] md:h-[28rem] lg:h-[28rem] flex flex-col"
+                       w-full sm:w-[90%] md:w-auto mx-auto sm:mx-0
+                       h-80 sm:h-96 md:h-112 flex flex-col"
           >
             {/* Overlay for hover shading */}
             <motion.div
@@ -67,7 +67,7 @@ function HeadMember() {
             />
 
             {/* Image */}
-            <div className="relative w-full flex-[0.7] h-[80%] overflow-hidden">
+            <div className="relative w-full flex-[0.7] h-[70%] overflow-hidden">
               <motion.img
                 src={member.image}
                 alt={member.name}
