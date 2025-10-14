@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Zap, Users, Award, Cpu } from "lucide-react";
+import { Zap, Users, Cpu } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 function FrontPage() {
@@ -84,9 +84,6 @@ function FrontPage() {
             </div>
             <div className="flex items-center gap-2">
               <Users className="text-[#3b82f6] w-5 h-5 sm:w-6 sm:h-6" /> <span>100+ Members</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Award className="text-[#3b82f6] w-5 h-5 sm:w-6 sm:h-6" /> <span>5 National Awards</span>
             </div>
           </div>
         </div>
