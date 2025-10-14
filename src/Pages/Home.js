@@ -1,12 +1,14 @@
 import React from 'react'
-import HeadMember from '../component/HomeComponent/HeadMember'
+import Sponser from '../component/HomeComponent/Sponser'
+import FrontPage from "../component/HomeComponent/FrontPage";
+import HeadMember from '../component/HomeComponent/HeadMember';
 
 function Home() {
   return (
     <div>
-     
-      <HeadMember/>
-     
+       <FrontPage />
+       <HeadMember/>
+      <Sponser/>
     </div>
   )
 }

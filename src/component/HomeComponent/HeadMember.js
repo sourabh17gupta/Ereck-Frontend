@@ -29,7 +29,7 @@ function HeadMember() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white py-16 px-3 sm:px-8 lg:px-12">
+    <div className="min-h-screen bg-black text-white py-5 px-3 sm:px-8 lg:px-12">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -30 }}
