@@ -12,6 +12,7 @@ import Error from './Pages/Error';
 import Footer from './component/common/Footter';
 import Gallery from './Pages/Gallery';
 import Navbar from './component/common/Navbar';
+import SignUp from './Pages/SignUp';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path='*' element={<Error/>}/>
           <Route path='/gallery' element={<Gallery/>}/>
           <Route path='/event' element={<EventPage/>}/>
+          <Route path = '/signup' element={<SignUp/>} />
         </Routes>
       </div>
       <Footer/>
