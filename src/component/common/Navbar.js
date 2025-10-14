@@ -17,7 +17,7 @@ const Navbar = () => {
       name: "Team",
       dropdown: [
         { name: "Core", field: "core" },
-        { name: "Content Writing", field: "content-writing" },
+        { name: "Content Writing", field: "contentwriting" },
         { name: "Design", field: "design" },
         { name: "Management", field: "management" },
       ],
