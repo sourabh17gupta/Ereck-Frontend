@@ -1,8 +1,11 @@
 import React from 'react'
+import FrontPage from "../component/HomeComponent/FrontPage";
 
 function Home() {
   return (
-    <div>Home</div>
+    <div>
+       <FrontPage />
+    </div>
   )
 }
 
