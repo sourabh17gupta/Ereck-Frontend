@@ -5,8 +5,8 @@ import FrontPage from "../component/HomeComponent/FrontPage";
 function Home() {
   return (
     <div>
-      <Sponser/>
        <FrontPage />
+      <Sponser/>
     </div>
   )
 }
