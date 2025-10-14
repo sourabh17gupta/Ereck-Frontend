@@ -1,8 +1,11 @@
 import React from 'react'
+import HeadMember from '../component/HomeComponent/HeadMember'
 
 function Login() {
   return (
-    <div>Login</div>
+    <div>
+      <HeadMember/>
+    </div>
   )
 }
 
