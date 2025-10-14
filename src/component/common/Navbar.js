@@ -36,7 +36,7 @@ const Navbar = () => {
         scrolled ? "bg-black/30 backdrop-blur-md shadow-md" : "bg-black"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center h-20">
+      <div className="max-w-7xl mx-auto px-1 flex justify-between items-center h-20">
         {/* Logo */}
         <Link to="/" className="flex items-center space-x-3">
           {logo ? (
