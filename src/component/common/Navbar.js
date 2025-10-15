@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaBars, FaTimes, FaChevronDown } from "react-icons/fa";
 import { Link } from "react-router-dom";
-
+import Team from "../../Pages/Team";
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [teamOpen, setTeamOpen] = useState(false); // Mobile dropdown state

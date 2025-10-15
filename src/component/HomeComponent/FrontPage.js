@@ -32,9 +32,8 @@ function FrontPage() {
       />
 
       <section
-        className={`relative flex flex-col md:flex-row items-center justify-center md:justify-between px-6 md:px-16 
-          ${window.innerWidth < 768 ? `bg-cover bg-center min-h-[40vh] py-12` : `min-h-[90vh] py-16 md:py-20`} 
-          overflow-hidden`}
+        className={`relative flex flex-col md:flex-row items-center justify-center md:justify-between px-10 md:px-16 py-16 md:py-20 overflow-hidden
+        ${window.innerWidth < 768 ? `bg-cover bg-center min-h-[60vh]` : `min-h-[90vh]`}`}
         style={{
           backgroundColor: "#000000",
           backgroundImage:
@@ -60,23 +59,23 @@ function FrontPage() {
           </p>
 
           {/* Buttons */}
-          <div className="flex flex-row justify-center md:justify-start gap-3 mt-4 md:mt-6 flex-wrap sm:flex-nowrap">
+          <div className="flex flex-row justify-center md:justify-start gap-4 mt-4 md:mt-6 flex-wrap sm:flex-nowrap">
             <button
               onClick={JoinBtn}
-              className="bg-[#3b82f6] hover:bg-[#2563eb] text-white px-5 sm:px-8 py-2 sm:py-3 rounded-xl font-semibold text-sm sm:text-base shadow-lg transition duration-300 transform hover:scale-105"
+              className="bg-[#3b82f6] hover:bg-[#2563eb] text-white px-6 sm:px-8 py-2 sm:py-3 rounded-xl font-semibold text-sm sm:text-base shadow-lg transition duration-300 transform hover:scale-105"
             >
               Explore Events
             </button>
             <button
               onClick={JoinNowBtn}
-              className="bg-[#facc15] hover:bg-[#eab308] text-black px-5 sm:px-8 py-2 sm:py-3 rounded-xl font-semibold text-sm sm:text-base shadow-lg transition duration-300 transform hover:scale-105"
+              className="bg-[#facc15] hover:bg-[#eab308] text-black px-6 sm:px-8 py-2 sm:py-3 rounded-xl font-semibold text-sm sm:text-base shadow-lg transition duration-300 transform hover:scale-105"
             >
               Join Us
             </button>
           </div>
 
           {/* Stats */}
-          <div className="flex flex-wrap justify-center md:justify-start gap-4 sm:gap-6 md:gap-8 mt-6 md:mt-8 text-gray-300 text-xs sm:text-sm md:text-base font-medium">
+          <div className="flex flex-wrap justify-center md:justify-start gap-6 sm:gap-8 md:gap-10 mt-6 md:mt-8 text-gray-300 text-xs sm:text-sm md:text-base font-medium">
             <div className="flex items-center gap-2">
               <Zap className="text-[#3b82f6] w-5 h-5 sm:w-6 sm:h-6" /> <span>10+ Workshops</span>
             </div>

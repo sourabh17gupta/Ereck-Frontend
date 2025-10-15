@@ -27,7 +27,7 @@ function App() {
           <Route path='/Privacy-Policy' element={<PrivacyPolicy/>}/>
           <Route path='/Terms-and-condition' element={<TermsAndCondition/>}/>
           <Route path='/' element={<Home/>}/>
-          <Route path='/Team' element={<Team/>}/>
+          <Route path='/team' element={<Team/>}/>
           <Route path='*' element={<Error/>}/>
           <Route path='/gallery' element={<Gallery/>}/>
           <Route path='/event' element={<EventPage/>}/>
