@@ -7,12 +7,12 @@ import TermsAndCondition from './Pages/TermsAndCondition';
 import Home from './Pages/Home'
 import ContactUs from './Pages/ContactUs';
 import EventPage from './Pages/EventPage';
-import Team from './Pages/Team';
 import Error from './Pages/Error';
 import Footer from './component/common/Footter';
 import Gallery from './Pages/Gallery';
 import Navbar from './component/common/Navbar';
 import SignUp from './Pages/SignUp';
+import Team from './Pages/Team';
 
 function App() {
   return (
@@ -27,7 +27,7 @@ function App() {
           <Route path='/Privacy-Policy' element={<PrivacyPolicy/>}/>
           <Route path='/Terms-and-condition' element={<TermsAndCondition/>}/>
           <Route path='/' element={<Home/>}/>
-          <Route path='/team' element={<Team/>}/>
+          <Route path='/team/:teamName' element={<Team/>}/>
           <Route path='*' element={<Error/>}/>
           <Route path='/gallery' element={<Gallery/>}/>
           <Route path='/event' element={<EventPage/>}/>

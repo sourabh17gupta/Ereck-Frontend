@@ -4,3 +4,7 @@ export const teamFormDataendPoint = {
   TeamData_API : BASE_URL + "/teamdata"
 }
 
+export const teamDetailsPoint = {
+  TeamDetail_API : BASE_URL + "/getTeamDetails"
+}
+
