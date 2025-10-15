@@ -6,7 +6,7 @@ import { setTeamDetail, setLoading } from "../../redux/slice/TeamDetail";
 import { Loader2, Instagram, Linkedin } from "lucide-react";
 
 const TeamDetail = () => {
-  const { slug } = useParams();
+  const { teamName } = useParams();
   const dispatch = useDispatch();
   const { teamDetail, loading } = useSelector((state) => state.teamDetail);
 
@@ -14,7 +14,7 @@ const TeamDetail = () => {
     const fetchTeam = async () => {
       dispatch(setLoading(true));
       try {
-        const data = await getSingleTeam(slug);
+        const data = await getSingleTeam(teamName);
         dispatch(setTeamDetail(data));
       } catch (error) {
         console.error("Error fetching team details:", error);
@@ -23,51 +23,51 @@ const TeamDetail = () => {
       }
     };
 
-    fetchTeam();
-  }, [slug, dispatch]);
+    if (teamName) fetchTeam();
+  }, [teamName, dispatch]);
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <Loader2 className="animate-spin w-10 h-10 text-blue-500" />
+      <div className="flex justify-center items-center h-screen bg-black">
+        <Loader2 className="animate-spin w-10 h-10 text-yellow-400" />
       </div>
     );
   }
 
   if (!teamDetail) {
     return (
-      <div className="text-center text-gray-600 mt-10 text-lg">
+      <div className="text-center text-yellow-400 mt-10 text-lg bg-black min-h-screen flex items-center justify-center">
         Team not found.
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10 px-6">
+    <div className="min-h-screen bg-black py-10 px-6 text-yellow-400">
       {/* Header */}
-      <h1 className="text-4xl font-bold text-center text-gray-800 mb-4 capitalize">
-        {slug} Team
+      <h1 className="text-4xl font-bold text-center mb-4 capitalize">
+        {teamName} Team
       </h1>
-      <p className="text-center max-w-3xl mx-auto text-gray-600 mb-12 text-lg">
+      <p className="text-center max-w-3xl mx-auto mb-12 text-lg text-yellow-300">
         {teamDetail.description}
       </p>
 
-      {/* Members */}
+      {/* Team Members */}
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center">
         {teamDetail.teamMembers.map((member) => (
           <div
             key={member._id}
-            className="bg-white shadow-md hover:shadow-xl transition-shadow duration-300 rounded-2xl p-5 flex flex-col items-center text-center"
+            className="bg-black/70 shadow-md hover:shadow-yellow-400/50 transition-shadow duration-300 rounded-2xl p-5 flex flex-col items-center text-center border border-yellow-400/20"
           >
             <img
               src={member.Image}
               alt={member.name}
-              className="w-32 h-32 object-cover rounded-full mb-4 border-4 border-blue-100"
+              className="w-32 h-32 object-cover rounded-full mb-4 border-4 border-yellow-400 shadow-md"
             />
-            <h3 className="text-lg font-semibold text-gray-800">
+            <h3 className="text-lg font-semibold text-yellow-400">
               {member.name}
             </h3>
-            <p className="text-sm text-blue-500 font-medium capitalize">
+            <p className="text-sm text-yellow-300 font-medium capitalize">
               {member.Position}
             </p>
 
@@ -87,7 +87,7 @@ const TeamDetail = () => {
                   href={`https://linkedin.com/in/${member.LinkdinId}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-blue-600 hover:text-blue-700 transition-colors"
+                  className="text-blue-500 hover:text-blue-600 transition-colors"
                 >
                   <Linkedin className="w-5 h-5" />
                 </a>
