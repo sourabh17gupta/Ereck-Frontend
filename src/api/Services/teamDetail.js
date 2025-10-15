@@ -9,6 +9,7 @@ const { TeamDetail_API } = teamDetailsPoint;
 // 🔹 1. API call
 export const getSingleTeam = async (slug) => {
   try {
+    console.log(slug);
     const response = await apiConnector("GET", `${TeamDetail_API}/${slug}`);
     // Backend sends { success: true, data: { description, teamMembers } }
     return response?.data?.data || null;
