@@ -1,4 +1,3 @@
-// redux/slices/profileSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -7,17 +6,18 @@ const initialState = {
 };
 
 const teamDetailSlice = createSlice({
-  name: "teamData",
+  name: "teamDetail",
   initialState,
   reducers: {
     setTeamDetail(state, action) {
       state.teamDetail = action.payload;
+      localStorage.setItem("teamDetail", JSON.stringify(action.payload));
     },
     setLoading(state, action) {
       state.loading = action.payload;
-    }
+    },
   },
 });
 
-export const { setTeamData, setLoading } = teamDetailSlice.actions;
+export const { setTeamDetail, setLoading } = teamDetailSlice.actions;
 export default teamDetailSlice.reducer;
