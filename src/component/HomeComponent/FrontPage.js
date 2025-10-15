@@ -13,6 +13,7 @@ function FrontPage() {
 
   const navigate = useNavigate();
   const [current, setCurrent] = useState(0);
+  
 
   useEffect(() => {
     const interval = setInterval(() => {
