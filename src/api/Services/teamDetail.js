@@ -1,29 +1,29 @@
-// src/api/Services/teamDetail.js
 import { apiConnector } from "../apiConnector";
 import { teamDetailsPoint } from "../api";
 import { setTeamDetail, setLoading } from "../../redux/slice/TeamDetail";
 
-const { TeamDetail_API } = teamDetailsPoint;
+const { TeamDetail_API } = teamDetailsPoint; 
 // Example: TeamDetail_API = `${BASE_URL}/teams`
 
 // 🔹 1. API call
-export const getSingleTeam = async (slug) => {
+export const getSingleTeam = async (teamName) => {
   try {
-    console.log(slug);
-    const response = await apiConnector("GET", `${TeamDetail_API}/${slug}`);
+    console.log("Fetching team:", teamName);
+    const response = await apiConnector("GET", `${TeamDetail_API}/${teamName}`);
     // Backend sends { success: true, data: { description, teamMembers } }
     return response?.data?.data || null;
   } catch (error) {
-    console.error(`Error fetching team ${slug}:`, error);
+    console.error(`Error fetching team ${teamName}:`, error);
     throw error;
   }
 };
 
-export const fetchTeamDetail = (slug) => async (dispatch) => {
+// 🔹 2. Thunk (Redux async)
+export const fetchTeamDetail = (teamName) => async (dispatch) => {
   try {
-    console.log("ihihi");
+    console.log("Fetching team with Redux thunk:", teamName);
     dispatch(setLoading(true));
-    const teamData = await getSingleTeam(slug);
+    const teamData = await getSingleTeam(teamName);
     dispatch(setTeamDetail(teamData)); // save entire data object
   } catch (error) {
     console.error("Failed to fetch team:", error);
