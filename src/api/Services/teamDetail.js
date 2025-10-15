@@ -19,9 +19,9 @@ export const getSingleTeam = async (slug) => {
   }
 };
 
-// 🔹 2. Redux thunk
 export const fetchTeamDetail = (slug) => async (dispatch) => {
   try {
+    cosole.log("ihihi");
     dispatch(setLoading(true));
     const teamData = await getSingleTeam(slug);
     dispatch(setTeamDetail(teamData)); // save entire data object
