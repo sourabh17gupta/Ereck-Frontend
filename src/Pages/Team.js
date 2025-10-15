@@ -11,20 +11,22 @@ const Team = () => {
   const { teamDetail, loading } = useSelector((state) => state.teamDetail);
 
   useEffect(() => {
-    const fetchTeam = async () => {
-      dispatch(setLoading(true));
-      try {
-        const data = await getSingleTeam(teamName);
-        dispatch(setTeamDetail(data));
-      } catch (error) {
-        console.error("Error fetching team details:", error);
-      } finally {
-        dispatch(setLoading(false));
-      }
-    };
-
-    if (teamName) fetchTeam();
-  }, [teamName, dispatch]);
+    // Only fetch if no data exists or teamName is different
+    if (!teamDetail || teamDetail.teamName !== teamName) {
+      const fetchTeam = async () => {
+        dispatch(setLoading(true));
+        try {
+          const data = await getSingleTeam(teamName);
+          dispatch(setTeamDetail({ ...data, teamName }));
+        } catch (error) {
+          console.error("Error fetching team:", error);
+        } finally {
+          dispatch(setLoading(false));
+        }
+      };
+      fetchTeam();
+    }
+  }, [teamName, dispatch, teamDetail]);
 
   if (loading) {
     return (
@@ -43,12 +45,10 @@ const Team = () => {
   }
 
   // Separate the head of the team
-  const head = teamDetail.teamMembers.find(
-    (member) => member.Position.toLowerCase().includes("head") // or "lead"
+  const head = teamDetail.teamMembers.find((member) =>
+    member.Position.toLowerCase().includes("head")
   );
-  const members = teamDetail.teamMembers.filter(
-    (member) => member !== head
-  );
+  const members = teamDetail.teamMembers.filter((member) => member !== head);
 
   return (
     <div className="min-h-screen bg-black py-12 px-6 text-yellow-400">
