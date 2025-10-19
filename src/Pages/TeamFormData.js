@@ -85,7 +85,7 @@ if (isSubmitted) {
 
       <form
         onSubmit={handleSubmit}
-        className="bg-[#2a2400]/90 p-6 rounded-xl shadow-lg border border-[#FFC107]/40 w-full max-w-md sm:max-w-lg space-y-3"
+        className="bg-black p-6 rounded-xl shadow-lg border border-[#FFC107]/40 w-full max-w-md sm:max-w-lg space-y-3"
       >
         <FormField label="Full Name" name="name" value={formData.name} onChange={changeHandler} />
         <FormField label="Email" type="email" name="email" value={formData.email} onChange={changeHandler} />
