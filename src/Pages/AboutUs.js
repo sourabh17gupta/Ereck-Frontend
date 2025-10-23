@@ -1,8 +1,4 @@
 import {motion} from "framer-motion";
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/main
 function AboutUs() {
   return (
     <div className="min-h-screen bg-black text-white px-5 sm:px-10 lg:px-20 flex flex-col justify-start items-center pt-10 pb-10">
