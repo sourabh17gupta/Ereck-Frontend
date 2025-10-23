@@ -11,7 +11,6 @@ const Team = () => {
   const { teamDetail, loading } = useSelector((state) => state.teamDetail);
 
   useEffect(() => {
-    // Only fetch if no data exists or teamName is different
     if (!teamDetail || teamDetail.teamName !== teamName) {
       const fetchTeam = async () => {
         dispatch(setLoading(true));
@@ -49,6 +48,15 @@ const Team = () => {
     member.Position.toLowerCase().includes("head")
   );
   const members = teamDetail.teamMembers.filter((member) => member !== head);
+
+  // Group members by Year
+  const membersByYear = members.reduce((acc, member) => {
+    if (!acc[member.Year]) acc[member.Year] = [];
+    acc[member.Year].push(member);
+    return acc;
+  }, {});
+
+  const years = ["2", "3", "4"]; // Order of years
 
   return (
     <div className="min-h-screen bg-black py-12 px-6 text-yellow-400">
@@ -99,47 +107,57 @@ const Team = () => {
         </div>
       )}
 
-      {/* Other Team Members */}
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center">
-        {members.map((member) => (
-          <div
-            key={member._id}
-            className="bg-black/70 border border-yellow-400/30 rounded-2xl p-6 flex flex-col items-center text-center shadow-md hover:shadow-yellow-400/50 transition-shadow"
-          >
-            <img
-              src={member.Image}
-              alt={member.name}
-              className="w-32 h-32 object-cover rounded-full mb-4 border-4 border-yellow-400 shadow-md"
-            />
-            <h3 className="text-xl font-semibold mb-1">{member.name}</h3>
-            <p className="text-sm text-yellow-300 font-medium capitalize mb-3">
-              {member.Position}
-            </p>
-            <div className="flex gap-4">
-              {member.InstagramId && (
-                <a
-                  href={`https://instagram.com/${member.InstagramId}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-pink-500 hover:text-pink-600 transition-colors"
+      {/* Members segregated by Year */}
+      {years.map((year) => {
+        const yearMembers = membersByYear[year] || [];
+        if (yearMembers.length === 0) return null;
+
+        return (
+          <div key={year} className="mb-12">
+            <h2 className="text-3xl font-bold mb-6">{year} Year Members</h2>
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center">
+              {yearMembers.map((member) => (
+                <div
+                  key={member._id}
+                  className="bg-black/70 border border-yellow-400/30 rounded-2xl p-6 flex flex-col items-center text-center shadow-md hover:shadow-yellow-400/50 transition-shadow"
                 >
-                  <Instagram className="w-5 h-5" />
-                </a>
-              )}
-              {member.LinkdinId && (
-                <a
-                  href={`https://linkedin.com/in/${member.LinkdinId}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-blue-500 hover:text-blue-600 transition-colors"
-                >
-                  <Linkedin className="w-5 h-5" />
-                </a>
-              )}
+                  <img
+                    src={member.Image}
+                    alt={member.name}
+                    className="w-32 h-32 object-cover rounded-full mb-4 border-4 border-yellow-400 shadow-md"
+                  />
+                  <h3 className="text-xl font-semibold mb-1">{member.name}</h3>
+                  <p className="text-sm text-yellow-300 font-medium capitalize mb-3">
+                    {member.Position}
+                  </p>
+                  <div className="flex gap-4">
+                    {member.InstagramId && (
+                      <a
+                        href={`https://instagram.com/${member.InstagramId}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-pink-500 hover:text-pink-600 transition-colors"
+                      >
+                        <Instagram className="w-5 h-5" />
+                      </a>
+                    )}
+                    {member.LinkdinId && (
+                      <a
+                        href={`https://linkedin.com/in/${member.LinkdinId}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-blue-500 hover:text-blue-600 transition-colors"
+                      >
+                        <Linkedin className="w-5 h-5" />
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-        ))}
-      </div>
+        );
+      })}
     </div>
   );
 };
