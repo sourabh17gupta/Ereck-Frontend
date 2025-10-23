@@ -73,7 +73,7 @@ if (isSubmitted) {
 
 
   return (
-    <div className="min-h-screen flex flex-col justify-start items-center bg-gradient-to-br from-[#1f1b00] via-[#2c2500] to-[#3b3200] text-white py-8 px-4">
+    <div className="min-h-screen flex flex-col justify-start items-center bg-black text-white py-8 px-4">
       <div className="mb-4 text-center">
         <h1 className="text-3xl font-extrabold text-[#FFC107] drop-shadow-md">
           Ereck Member Data
@@ -85,7 +85,7 @@ if (isSubmitted) {
 
       <form
         onSubmit={handleSubmit}
-        className="bg-[#2a2400]/90 p-6 rounded-xl shadow-lg border border-[#FFC107]/40 w-full max-w-md sm:max-w-lg space-y-3"
+        className="bg-black p-6 rounded-xl shadow-lg border border-[#FFC107]/40 w-full max-w-md sm:max-w-lg space-y-3"
       >
         <FormField label="Full Name" name="name" value={formData.name} onChange={changeHandler} />
         <FormField label="Email" type="email" name="email" value={formData.email} onChange={changeHandler} />
