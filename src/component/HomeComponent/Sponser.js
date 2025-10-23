@@ -11,7 +11,7 @@ function Sponser() {
   ];
 
   return (
-    <section className="py-12 bg-black">
+    <section className="py-4 bg-black">
       <h2 className="text-center text-3xl font-bold mb-8 text-gray-800 dark:text-gray-100">
         Our Past Sponsors
       </h2>
