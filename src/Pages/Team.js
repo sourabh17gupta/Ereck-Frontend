@@ -84,7 +84,7 @@ const Team = () => {
             <div className="flex gap-4">
               {head.InstagramId && (
                 <a
-                  href={`https://instagram.com/${head.InstagramId}`}
+                  href={`${head.InstagramId}`}
                   target="_blank"
                   rel="noreferrer"
                   className="text-pink-500 hover:text-pink-600 transition-colors"
@@ -94,7 +94,7 @@ const Team = () => {
               )}
               {head.LinkdinId && (
                 <a
-                  href={`https://linkedin.com/in/${head.LinkdinId}`}
+                  href={`${head.LinkdinId}`}
                   target="_blank"
                   rel="noreferrer"
                   className="text-blue-500 hover:text-blue-600 transition-colors"
