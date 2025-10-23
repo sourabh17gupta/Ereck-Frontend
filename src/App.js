@@ -6,7 +6,8 @@ import PrivacyPolicy from './Pages/PrivacyPolicy';
 import TermsAndCondition from './Pages/TermsAndCondition';
 import Home from './Pages/Home'
 import ContactUs from './Pages/ContactUs';
-import EventPage from './Pages/EventPage';
+import EventPage from "./Pages/EventPage";
+import EventDescription from "./component/EventDescription";
 import Error from './Pages/Error';
 import Footer from './component/common/Footter';
 import Gallery from './Pages/Gallery';
@@ -30,7 +31,8 @@ function App() {
           <Route path='/team/:teamName' element={<Team/>}/>
           <Route path='*' element={<Error/>}/>
           <Route path='/gallery' element={<Gallery/>}/>
-          <Route path='/event' element={<EventPage/>}/>
+          <Route path="/event" element={<EventPage />} />
+          <Route path="/eventdescription/:id" element={<EventDescription />} />
           <Route path = '/signup' element={<SignUp/>} />
         </Routes>
       </div>
