@@ -9,6 +9,7 @@ function FormFillPage() {
     InstagramId: "",
     LinkdinId: "",
     Position: "",
+    Year: "",       // Added Year field
     TeamName: "",
     Image: null,
   });
@@ -48,6 +49,7 @@ function FormFillPage() {
         InstagramId: "",
         LinkdinId: "",
         Position: "",
+        Year: "",
         TeamName: "",
         Image: null,
       });
@@ -57,20 +59,18 @@ function FormFillPage() {
     }
   };
 
-  // If submitted, show a success page
-if (isSubmitted) {
-  return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-[#1f1b00] via-[#2c2500] to-[#3b3200] text-white p-4">
-      <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#FFC107] mb-4 text-center drop-shadow-lg">
-        Submission Successful!
-      </h1>
-      <p className="text-gray-300 mb-6 text-center text-sm sm:text-base md:text-lg px-4 sm:px-6 md:px-0">
-        Your details have been submitted successfully.
-      </p>
-    </div>
-  );
-}
-
+  if (isSubmitted) {
+    return (
+      <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-[#1f1b00] via-[#2c2500] to-[#3b3200] text-white p-4">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#FFC107] mb-4 text-center drop-shadow-lg">
+          Submission Successful!
+        </h1>
+        <p className="text-gray-300 mb-6 text-center text-sm sm:text-base md:text-lg px-4 sm:px-6 md:px-0">
+          Your details have been submitted successfully.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col justify-start items-center bg-black text-white py-8 px-4">
@@ -108,6 +108,23 @@ if (isSubmitted) {
           </select>
         </div>
 
+        {/* Year Dropdown */}
+        <div>
+          <label className="block mb-1 text-[#FFC107] text-sm font-semibold">Year</label>
+          <select
+            name="Year"
+            value={formData.Year}
+            onChange={changeHandler}
+            className="w-full p-2 rounded-md bg-[#3b3200] border border-[#FFC107]/40 focus:border-[#FFC107] focus:outline-none text-sm"
+            required
+          >
+            <option value="">Select Year</option>
+            <option value="2">2nd Year</option>
+            <option value="3">3rd Year</option>
+            <option value="4">4th Year</option>
+          </select>
+        </div>
+
         {/* TeamName Dropdown */}
         <div>
           <label className="block mb-1 text-[#FFC107] text-sm font-semibold">Team Name</label>
@@ -132,7 +149,7 @@ if (isSubmitted) {
           <input
             type="file"
             name="Image"
-            accept="Image/*"
+            accept="image/*"
             onChange={changeHandler}
             className="w-full p-1.5 rounded-md bg-[#3b3200] border border-[#FFC107]/40 focus:border-[#FFC107] focus:outline-none text-sm"
           />
