@@ -8,7 +8,7 @@ function Home() {
     <div>
        <FrontPage />
        <HeadMember/>
-      <Sponser/>
+       <Sponser/>
     </div>
   )
 }
