@@ -29,7 +29,7 @@ function HeadMember() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white py-20 px-3 sm:px-8 lg:px-12">
+    <div className="min-h-screen bg-black text-white py-8 px-3 sm:px-8 lg:px-12">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -30 }}
@@ -46,8 +46,14 @@ function HeadMember() {
         </p>
       </motion.div>
 
-      {/* Responsive Grid */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8 px-2 sm:px-0">
+      {/* Responsive Layout */}
+      <div
+        className="
+          flex flex-col items-center gap-6
+          sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4
+          sm:gap-8 sm:px-0 max-w-7xl mx-auto
+        "
+      >
         {data.map((member, index) => (
           <motion.div
             key={index}
@@ -57,17 +63,16 @@ function HeadMember() {
             viewport={{ once: true }}
             whileHover={{ scale: 1.05, y: -5 }}
             className="relative bg-black/70 backdrop-blur-md border border-gray-700 rounded-xl overflow-hidden shadow-md transition-all duration-300
-                       w-full sm:w-[90%] md:w-auto mx-auto sm:mx-0
-                       h-80 sm:h-96 md:h-112 flex flex-col"
+              w-[80%] sm:w-full h-80 sm:h-96 flex flex-col"
           >
-            {/* Overlay for hover shading */}
+            {/* Hover Overlay */}
             <motion.div
               className="absolute inset-0 bg-black/30 pointer-events-none rounded-xl transition-opacity"
               whileHover={{ opacity: 0.5 }}
             />
 
             {/* Image */}
-            <div className="relative w-full flex-[0.7] h-[70%] overflow-hidden">
+            <div className="relative w-full flex-[0.7] overflow-hidden">
               <motion.img
                 src={member.image}
                 alt={member.name}
@@ -78,11 +83,11 @@ function HeadMember() {
             </div>
 
             {/* Text */}
-            <div className="p-4 sm:p-5 text-center relative z-10 flex flex-col justify-center items-center flex-[0.3] h-[30%]">
+            <div className="p-4 sm:p-5 text-center relative z-10 flex flex-col justify-center items-center flex-[0.3]">
               <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-yellow-400">
                 {member.name}
               </h2>
-              <p className="text-gray-300 mt-2 text-sm sm:text-base md:text-base uppercase tracking-wide">
+              <p className="text-gray-300 mt-2 text-sm sm:text-base uppercase tracking-wide">
                 {member.post}
               </p>
             </div>
