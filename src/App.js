@@ -22,7 +22,7 @@ function App() {
       <div className="pt-20">
         <Routes>
           <Route path='/teamData' element={<TeamFormData/>}/>
-          <Route path='/AboutUs' element={<AboutUs/>}/>
+          <Route path='/about' element={<AboutUs/>}/>
           <Route path='/ContactUs' element={<ContactUs/>}/>
           <Route path='/Privacy-Policy' element={<PrivacyPolicy/>}/>
           <Route path='/Terms-and-condition' element={<TermsAndCondition/>}/>
