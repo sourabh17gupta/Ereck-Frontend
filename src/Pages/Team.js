@@ -56,7 +56,7 @@ const Team = () => {
     return acc;
   }, {});
 
-  const years = ["4", "3", "2"]; // Order of years
+  const years = ["4", "3", "2"]; 
 
   return (
     <div className="min-h-screen bg-black py-12 px-6 text-yellow-400">
