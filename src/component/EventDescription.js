@@ -1,5 +1,6 @@
-import { useParams, useNavigate } from "react-router-dom"; 
-import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 import Eventdata from "../Eventdata";
 
 const EventDescription = () => {
@@ -7,19 +8,44 @@ const EventDescription = () => {
   const navigate = useNavigate();
   const event = Eventdata[id];
 
-  // Determine initial number of visible images based on screen width
   const [visibleImages, setVisibleImages] = useState(0);
-  const [increment, setIncrement] = useState(4); // Number of images to load on click
+  const [increment, setIncrement] = useState(4);
+  const loadMoreRef = useRef(null);
 
+  // Set initial visible count based on screen size
   useEffect(() => {
     if (window.innerWidth >= 1024) {
       setVisibleImages(8);
-      setIncrement(8); // Laptop/Desktop: 8 at a time
+      setIncrement(8);
     } else {
       setVisibleImages(4);
-      setIncrement(4); // Mobile/Tablet: 4 at a time
+      setIncrement(4);
     }
   }, []);
+
+  // Lazy load on scroll
+  useEffect(() => {
+    if (!event || !loadMoreRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setVisibleImages((prev) =>
+            Math.min(prev + increment, event.galleryImages.length)
+          );
+        }
+      },
+      { threshold: 1.0 }
+    );
+
+    observer.observe(loadMoreRef.current);
+    return () => observer.disconnect();
+  }, [increment, event]);
+
+  // Smooth scroll to top when new event loads
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [id]);
 
   if (!event) {
     return (
@@ -29,12 +55,8 @@ const EventDescription = () => {
     );
   }
 
-  const loadMoreImages = () => {
-    setVisibleImages((prev) => Math.min(prev + increment, event.galleryImages.length));
-  };
-
   return (
-    <div className="min-h-screen bg-black text-gray-100 pb-12 px-4 sm:px-6 lg:px-12">
+    <div className="min-h-screen bg-black text-gray-100 pb-12 px-4 sm:px-6 lg:px-12 scroll-smooth">
       {/* Back Button */}
       <div className="flex justify-end mb-6">
         <button
@@ -45,32 +67,67 @@ const EventDescription = () => {
         </button>
       </div>
 
-      {/* Event Banner */}
-      <div className="rounded-2xl overflow-hidden shadow-lg mb-6">
+      {/* Event Banner with fade-in */}
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="rounded-2xl overflow-hidden shadow-lg mb-6"
+      >
         <img
           src={event.bannerImage}
           alt={event.name}
           loading="lazy"
           className="w-full h-80 object-cover transform transition-transform duration-500 hover:scale-105"
         />
-      </div>
+      </motion.div>
 
       {/* Event Title & Description */}
-      <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-yellow-500">
+      <motion.h1
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="text-3xl sm:text-4xl font-bold mb-4 text-yellow-500 fade-in-section"
+      >
         {event.name}
-      </h1>
-      <p className="text-gray-300 mb-12">
+      </motion.h1>
+
+      <motion.p
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        viewport={{ once: true }}
+        className="text-gray-300 mb-12 leading-relaxed fade-in-section"
+      >
         {event.description}
-      </p>
+      </motion.p>
 
       {/* Gallery Section */}
       {event.galleryImages && event.galleryImages.length > 0 && (
         <>
-          <h2 className="text-2xl font-semibold mb-4 text-yellow-500">Gallery</h2>
+          <motion.h2
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-2xl font-semibold mb-4 text-yellow-500"
+          >
+            Gallery
+          </motion.h2>
+
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
             {event.galleryImages.slice(0, visibleImages).map((img, index) => (
-              <div
+              <motion.div
                 key={index}
+                initial={{
+                  opacity: 0,
+                  x: index % 2 === 0 ? -50 : 50, // alternate left/right
+                }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                viewport={{ once: true, amount: 0.2 }}
                 className="overflow-hidden rounded-xl shadow-md bg-black/60 backdrop-blur-md transition-transform transform hover:scale-105"
               >
                 <img
@@ -79,19 +136,17 @@ const EventDescription = () => {
                   loading="lazy"
                   className="w-full h-48 object-cover"
                 />
-              </div>
+              </motion.div>
             ))}
           </div>
 
-          {/* View More Button */}
+          {/* Scroll trigger */}
           {visibleImages < event.galleryImages.length && (
-            <div className="flex justify-center mt-6">
-              <button
-                onClick={loadMoreImages}
-                className="bg-yellow-500 text-black px-6 py-2 rounded-lg hover:bg-yellow-400 transition-colors"
-              >
-                View More
-              </button>
+            <div
+              ref={loadMoreRef}
+              className="h-10 mt-6 flex justify-center items-center"
+            >
+              <p className="text-gray-400 animate-pulse">Loading more...</p>
             </div>
           )}
         </>
