@@ -1,5 +1,3 @@
-// src/data/galleryData.js
-
 export const galleryData = {
   "Tech Fest 2024": [
     { id: 1, src: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b", caption: "Robotics Challenge" },
