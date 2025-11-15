@@ -3,14 +3,12 @@ import { motion } from "framer-motion";
 function HeadMember() {
   const data = [
     {
-      image:
-        "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2",
+      image: "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2",
       post: "President",
       name: "Vikas Saini",
     },
     {
-      image:
-        "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2",
+      image: "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2",
       post: "Vice-President",
       name: "Arushi",
     }
@@ -35,13 +33,11 @@ function HeadMember() {
         </p>
       </motion.div>
 
-      {/* Responsive Layout — centered on laptop/desktop */}
+      {/* FLEX Layout - Max 4 per row, auto centered */}
       <div
         className="
-          flex flex-col items-center gap-6
-          sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4
-          sm:gap-8 sm:px-0 max-w-7xl mx-auto
-          justify-center
+          flex flex-wrap justify-center 
+          gap-6 sm:gap-8 max-w-7xl mx-auto
         "
       >
         {data.map((member, index) => (
@@ -52,8 +48,18 @@ function HeadMember() {
             transition={{ duration: 0.2, delay: index * 0.15 }}
             viewport={{ once: true }}
             whileHover={{ scale: 1.05, y: -5 }}
-            className="relative bg-black/70 backdrop-blur-md border border-gray-700 rounded-xl overflow-hidden shadow-md transition-all duration-300
-              w-[80%] sm:w-full h-80 sm:h-96 flex flex-col"
+            className="
+              bg-black/70 backdrop-blur-md border border-gray-700 
+              rounded-xl overflow-hidden shadow-md 
+              transition-all duration-300
+
+              w-[85%] 
+              sm:w-[45%] 
+              md:w-[30%] 
+              lg:w-[22%]   /* MAX 4 per row */
+              h-80 sm:h-96
+              flex flex-col
+            "
           >
             {/* Hover Overlay */}
             <motion.div
@@ -73,7 +79,7 @@ function HeadMember() {
             </div>
 
             {/* Text */}
-            <div className="p-4 sm:p-5 text-center relative z-10 flex flex-col justify-center items-center flex-[0.3]">
+            <div className="p-4 sm:p-5 text-center flex flex-col justify-center items-center flex-[0.3] relative z-10">
               <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-yellow-400">
                 {member.name}
               </h2>
