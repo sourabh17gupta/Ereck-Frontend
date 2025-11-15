@@ -26,7 +26,7 @@ export default function Gallery() {
           transition={{ duration: 0.8 }}
           className="text-3xl md:text-5xl font-bold text-center mb-10 tracking-wide text-yellow-400"
         >
-          Event Gallery
+          Gallery
         </motion.h1>
 
         {/* Event Buttons */}
