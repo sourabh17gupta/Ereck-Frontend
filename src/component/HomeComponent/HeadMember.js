@@ -72,8 +72,8 @@ function HeadMember() {
                 alt={member.name}
                 loading="lazy"
                 className="w-full h-full object-cover object-center transform transition-transform duration-500"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 1.03 }}
+                whileHover={{ scale: 1.15 }}
+                whileTap={{ scale: 1.10 }}
               />
             </div>
 
