@@ -11,12 +11,11 @@ function FrontPage() {
   ];
 
   const headings = ["BUILD, SIMULATE AND MASTER ELECTRICAL CORE"];
-  
+
   const [current, setCurrent] = useState(0);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  const [textIndex, setTextIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState("");
-  const charIndexRef = useRef(0);
+
   const timeoutRef = useRef(null);
   const intervalRef = useRef(null);
 
@@ -38,31 +37,32 @@ function FrontPage() {
 
   // Typewriter effect
   useEffect(() => {
-  let headingIndex = 0; // track current heading locally
-  let charIndex = 0;
+    let headingIndex = 0;
+    let charIndex = 0;
 
-  const typeWriter = () => {
-    const currentHeading = headings[headingIndex];
-    if (charIndex < currentHeading.length-1) {
-      setDisplayedText((prev) => prev + currentHeading[charIndex]);
-      charIndex += 1;
-      timeoutRef.current = setTimeout(typeWriter, 120);
-    } else {
-      // Wait before moving to next heading
-      timeoutRef.current = setTimeout(() => {
-        setDisplayedText("");
-        charIndex = 0;
-        headingIndex = (headingIndex + 1) % headings.length;
-        typeWriter();
-      }, 1000);
-    }
-  };
+    const typeWriter = () => {
+      const currentHeading = headings[headingIndex];
 
-  typeWriter();
+      if (charIndex < currentHeading.length) {
+        // Safe append using slice
+        setDisplayedText(currentHeading.slice(0, charIndex + 1));
+        charIndex += 1;
+        timeoutRef.current = setTimeout(typeWriter, 120);
+      } else {
+        // Wait before moving to next heading
+        timeoutRef.current = setTimeout(() => {
+          charIndex = 0;
+          headingIndex = (headingIndex + 1) % headings.length;
+          setDisplayedText(""); // clear text
+          typeWriter();
+        }, 1000);
+      }
+    };
 
-  return () => clearTimeout(timeoutRef.current);
-}, []);
+    typeWriter();
 
+    return () => clearTimeout(timeoutRef.current);
+  }, [headings]);
 
   const fadeUp = {
     hidden: { opacity: 0, y: 40 },
