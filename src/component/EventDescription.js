@@ -10,16 +10,16 @@ const EventDescription = () => {
   const [visibleImages, setVisibleImages] = useState(4);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
 
-  // Handle screen resizing
+  // Handle screen resize
   useEffect(() => {
     const onResize = () => {
       const mobile = window.innerWidth < 1024;
       setIsMobile(mobile);
 
       if (!mobile) {
-        setVisibleImages(event.galleryImages.length); // Desktop → show all
+        setVisibleImages(event.galleryImages.length); // desktop: show all
       } else {
-        setVisibleImages(4); // Mobile default
+        setVisibleImages(4); // mobile default
       }
     };
 
@@ -82,30 +82,30 @@ const EventDescription = () => {
         </button>
       </div>
 
-      {/* DESCRIPTION + IMAGE (reduced spacing) */}
-      <div className="fade-up grid grid-cols-1 lg:grid-cols-2 gap-4 items-start mb-8">
+      {/* UPPER SECTION — IMAGE LEFT / DESCRIPTION RIGHT */}
+      <div className="fade-up grid grid-cols-1 lg:grid-cols-2 gap-4 items-start mb-6 max-w-[1050px] mx-auto">
 
-        {/* IMAGE (top on mobile, right on desktop) */}
+        {/* IMAGE — LEFT ON DESKTOP */}
         <div
           className="
-            order-1 lg:order-2
+            order-1 
             rounded-2xl overflow-hidden border border-yellow-500/40 shadow-xl
-            lg:max-w-[380px] lg:ml-auto
             bg-black/40 backdrop-blur-md
             hover:shadow-yellow-500/30 hover:scale-[1.02]
             transition-all duration-500
+            w-full
           "
         >
           <img
             src={event.bannerImage}
             alt={event.name}
             loading="lazy"
-            className="w-full h-[240px] md:h-[320px] object-cover"
+            className="w-full h-[260px] md:h-[340px] object-cover"
           />
         </div>
 
-        {/* DESCRIPTION */}
-        <div className="order-2 lg:order-1 max-w-[550px]">
+        {/* DESCRIPTION — RIGHT ON DESKTOP */}
+        <div className="order-2 max-w-[550px] lg:pl-4">
           <h1 className="text-4xl font-bold mb-2 text-yellow-500 tracking-wide">
             {event.name}
           </h1>
@@ -119,12 +119,12 @@ const EventDescription = () => {
       {/* GALLERY */}
       {event.galleryImages?.length > 0 && (
         <>
-          <h2 className="text-3xl font-semibold mb-4 text-yellow-500 fade-up tracking-wide">
-            Gallery
-          </h2>
+          {/* Perfectly aligned with upper section */}
+          <div className="max-w-[1050px] mx-auto">
 
-          {/* Gallery aligned under entire section */}
-          <div className="max-w-[1000px] mx-auto">
+            <h2 className="text-3xl font-semibold mb-4 text-yellow-500 fade-up tracking-wide">
+              Gallery
+            </h2>
 
             {/* GRID */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 fade-up">
@@ -148,7 +148,7 @@ const EventDescription = () => {
               ))}
             </div>
 
-            {/* MOBILE View More / Less */}
+            {/* MOBILE VIEW MORE / LESS */}
             {isMobile && (
               <div className="flex justify-center mt-6 fade-up">
                 {visibleImages < event.galleryImages.length ? (
