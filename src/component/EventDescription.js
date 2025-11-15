@@ -10,27 +10,26 @@ const EventDescription = () => {
   const [visibleImages, setVisibleImages] = useState(4);
   const [increment, setIncrement] = useState(4);
 
-  // Set initial visible count and increment depending on screen width
+  // Set increments based on screen width
   useEffect(() => {
-    const setCounts = () => {
+    const updateCounts = () => {
       if (window.innerWidth >= 1024) {
-        setVisibleImages((prev) => Math.max(prev, 8));
+        setVisibleImages(8);
         setIncrement(8);
       } else {
-        setVisibleImages((prev) => Math.max(prev, 4));
+        setVisibleImages(4);
         setIncrement(4);
       }
     };
 
-    setCounts();
-    window.addEventListener("resize", setCounts);
-    return () => window.removeEventListener("resize", setCounts);
+    updateCounts();
+    window.addEventListener("resize", updateCounts);
+    return () => window.removeEventListener("resize", updateCounts);
   }, []);
 
-  // Reset images and scroll to top when event id changes
+  // Reset on event change and scroll to top
   useEffect(() => {
     if (!event) return;
-    // reset visible count appropriate for screen
     if (window.innerWidth >= 1024) {
       setVisibleImages(8);
       setIncrement(8);
@@ -41,24 +40,21 @@ const EventDescription = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [id, event]);
 
-  // Fade-up intersection observer for elements with class "fade-up"
+  // Fade-up animation
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("fade-up-show");
-          }
+          if (entry.isIntersecting) entry.target.classList.add("fade-up-show");
         });
       },
-      { threshold: 0.18 }
+      { threshold: 0.2 }
     );
 
-    const els = document.querySelectorAll(".fade-up");
-    els.forEach((el) => observer.observe(el));
+    document.querySelectorAll(".fade-up").forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
-  }, [visibleImages, event]); // re-run to catch newly added gallery items
+  }, [visibleImages]);
 
   if (!event) {
     return (
@@ -67,14 +63,15 @@ const EventDescription = () => {
   }
 
   const loadMore = () => {
-    setVisibleImages((prev) => Math.min(prev + increment, event.galleryImages.length));
+    setVisibleImages((prev) =>
+      Math.min(prev + increment, event.galleryImages.length)
+    );
   };
 
   return (
-    <div className="min-h-screen bg-black text-gray-100 pb-12 px-4 sm:px-6 lg:px-12 scroll-smooth">
+    <div className="min-h-screen bg-black text-gray-100 pb-12 px-4 sm:px-6 lg:px-12">
 
-      {/* Embed the fade-up CSS here so it's self-contained.
-          Move to global CSS if you prefer. */}
+      {/* Fade-up CSS */}
       <style>{`
         .fade-up { opacity: 0; transform: translateY(40px); transition: all 0.7s ease-out; }
         .fade-up-show { opacity: 1; transform: translateY(0); }
@@ -90,14 +87,22 @@ const EventDescription = () => {
         </button>
       </div>
 
-      {/* LEFT-RIGHT LAYOUT (mobile: stacked; desktop: 2 columns) */}
-      <div className="fade-up grid grid-cols-1 lg:grid-cols-2 gap-8 items-start mb-12">
+      {/* MOBILE: image top, description bottom 
+          DESKTOP: image left, description right */}
+      <div className="fade-up grid grid-cols-1 lg:grid-cols-2 gap-10 items-start mb-12">
 
-        {/* LEFT side: text (on mobile this appears first if you want description first;
-            but per your Option A you asked banner on top on mobile, so we place the image first in DOM.
-            To ensure mobile shows image first, we give the text lg:order-1 and image lg:order-2.
-            On small screens image appears first (default). */}
-        <div className="lg:order-1">
+        {/* IMAGE — left on desktop, top on mobile */}
+        <div className="rounded-2xl overflow-hidden lg:order-1">
+          <img
+            src={event.bannerImage}
+            alt={event.name}
+            loading="lazy"
+            className="w-full h-80 object-cover rounded-lg shadow-lg"
+          />
+        </div>
+
+        {/* DESCRIPTION — right on desktop */}
+        <div className="lg:order-2">
           <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-yellow-500 fade-up">
             {event.name}
           </h1>
@@ -106,26 +111,15 @@ const EventDescription = () => {
             {event.description}
           </p>
         </div>
-
-        {/* RIGHT side: banner image (will appear on top on mobile due to DOM order) */}
-        <div className="rounded-2xl overflow-hidden lg:order-2 fade-up">
-          <img
-            src={event.bannerImage}
-            alt={event.name}
-            loading="lazy"
-            className="w-full h-80 object-cover rounded-lg shadow-lg"
-          />
-        </div>
       </div>
 
-      {/* Gallery heading */}
+      {/* Gallery */}
       {event.galleryImages?.length > 0 && (
         <>
           <h2 className="text-2xl font-semibold mb-4 text-yellow-500 fade-up">
             Gallery
           </h2>
 
-          {/* Gallery grid: 2 cols on small, 4 on md+ */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 fade-up">
             {event.galleryImages.slice(0, visibleImages).map((img, i) => (
               <div
@@ -135,14 +129,12 @@ const EventDescription = () => {
                 <img
                   src={img}
                   alt={`${event.name} ${i + 1}`}
-                  loading="lazy"
                   className="w-full h-48 object-cover"
                 />
               </div>
             ))}
           </div>
 
-          {/* View More button */}
           {visibleImages < event.galleryImages.length && (
             <div className="flex justify-center mt-6 fade-up">
               <button
