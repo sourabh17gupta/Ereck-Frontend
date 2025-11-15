@@ -3,12 +3,12 @@ import { motion } from "framer-motion";
 function HeadMember() {
   const data = [
     {
-      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
+      image: "https://images.unsplash.com/photo-1508264165352-258a6ec93d8e",
       post: "President",
       name: "Vikas Saini",
     },
     {
-      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
+      image: "https://images.unsplash.com/photo-1508264165352-258a6ec93d8e",
       post: "Vice-President",
       name: "Arushi",
     }
