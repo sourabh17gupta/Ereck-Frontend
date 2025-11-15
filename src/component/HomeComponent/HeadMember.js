@@ -11,7 +11,7 @@ function HeadMember() {
       image: "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2",
       post: "Vice-President",
       name: "Arushi",
-    }
+    },
   ];
 
   return (
@@ -21,7 +21,7 @@ function HeadMember() {
       <motion.div
         initial={{ opacity: 0, y: -30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.2 }}
+        transition={{ duration: 0.3 }}
         viewport={{ once: true }}
         className="text-center mb-12 sm:mb-16"
       >
@@ -34,21 +34,17 @@ function HeadMember() {
       </motion.div>
 
       {/* FLEX Layout - Max 4 per row, auto centered */}
-      <div
-        className="
-          flex flex-wrap justify-center 
-          gap-6 sm:gap-8 max-w-7xl mx-auto
-        "
-      >
+      <div className="flex flex-wrap justify-center gap-6 sm:gap-8 max-w-7xl mx-auto">
         {data.map((member, index) => (
           <motion.div
             key={index}
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2, delay: index * 0.15 }}
+            transition={{ duration: 0.4, delay: index * 0.15 }}
             viewport={{ once: true }}
-            whileHover={{ scale: 1.05, y: -5 }}
+            whileHover={{ scale: 1.05, y: -10, boxShadow: "0px 20px 40px rgba(250, 204, 21, 0.5)" }}
             className="
+              relative
               bg-black/70 backdrop-blur-md border border-gray-700 
               rounded-xl overflow-hidden shadow-md 
               transition-all duration-300
@@ -56,17 +52,11 @@ function HeadMember() {
               w-[85%] 
               sm:w-[45%] 
               md:w-[30%] 
-              lg:w-[22%]   /* MAX 4 per row */
+              lg:w-[22%] 
               h-80 sm:h-96
               flex flex-col
             "
           >
-            {/* Hover Overlay */}
-            <motion.div
-              className="absolute inset-0 bg-black/30 pointer-events-none rounded-xl transition-opacity"
-              whileHover={{ opacity: 0.5 }}
-            />
-
             {/* Image */}
             <div className="relative w-full flex-[0.7] overflow-hidden">
               <motion.img
