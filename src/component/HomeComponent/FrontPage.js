@@ -13,7 +13,6 @@ function FrontPage() {
 
   const navigate = useNavigate();
   const [current, setCurrent] = useState(0);
-  
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -52,34 +51,47 @@ function FrontPage() {
                 "0 0 6px rgba(250,204,21,0.4), 0 0 12px rgba(250,204,21,0.3)",
             }}
           >
-            BUILD, SIMULATE <br className="hidden sm:block" /> AND MASTER <br className="hidden sm:block" /> ELECTRICAL CORE
+            BUILD, SIMULATE <br className="hidden sm:block" /> AND MASTER{" "}
+            <br className="hidden sm:block" /> ELECTRICAL CORE
           </h1>
 
           <p className="text-gray-300 text-sm sm:text-base md:text-lg lg:text-xl font-medium leading-relaxed px-2 sm:px-0">
-            Where technology meets creativity — explore, experiment, and engineer your path to innovation.
+            Where technology meets creativity — explore, experiment, and engineer
+            your path to innovation.
           </p>
 
           {/* Buttons */}
           <div className="flex flex-row justify-start md:justify-start gap-4 mt-4 md:mt-6 flex-wrap sm:flex-nowrap">
             <button
-            onClick={JoinBtn}
-             className="bg-[#facc15] hover:bg-[#2563eb] text-white px-6 sm:px-8 py-2 sm:py-3 rounded-xl font-semibold text-sm sm:text-base shadow-lg transition duration-300 transform hover:scale-105"
+              onClick={JoinBtn}
+              className="bg-[#facc15] hover:bg-[#2563eb] text-white px-6 sm:px-8 py-2 sm:py-3 rounded-xl font-semibold text-sm sm:text-base shadow-lg transition duration-300 transform hover:scale-105"
             >
-             Explore Events
+              Explore Events
             </button>
           </div>
 
+          {/* Stats — Yellow on Mobile, Blue/Gray on Desktop */}
+          <div className="flex flex-wrap justify-center md:justify-start gap-6 sm:gap-8 md:gap-10 mt-6 md:mt-8 text-xs sm:text-sm md:text-base font-medium">
 
-          {/* Stats */}
-          <div className="flex flex-wrap justify-center md:justify-start gap-6 sm:gap-8 md:gap-10 mt-6 md:mt-8 text-gray-300 text-xs sm:text-sm md:text-base font-medium">
             <div className="flex items-center gap-2">
-              <Zap className="text-[#3b82f6] w-5 h-5 sm:w-6 sm:h-6" /> <span>10+ Workshops</span>
+              <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-[#facc15] sm:text-[#3b82f6]" />
+              <span className="text-[#facc15] sm:text-gray-300">
+                10+ Workshops
+              </span>
             </div>
+
             <div className="flex items-center gap-2">
-              <Cpu className="text-[#3b82f6] w-5 h-5 sm:w-6 sm:h-6" /> <span>25+ Projects</span>
+              <Cpu className="w-5 h-5 sm:w-6 sm:h-6 text-[#facc15] sm:text-[#3b82f6]" />
+              <span className="text-[#facc15] sm:text-gray-300">
+                25+ Projects
+              </span>
             </div>
+
             <div className="flex items-center gap-2">
-              <Users className="text-[#3b82f6] w-5 h-5 sm:w-6 sm:h-6" /> <span>100+ Members</span>
+              <Users className="w-5 h-5 sm:w-6 sm:h-6 text-[#facc15] sm:text-[#3b82f6]" />
+              <span className="text-[#facc15] sm:text-gray-300">
+                100+ Members
+              </span>
             </div>
           </div>
         </div>
