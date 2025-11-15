@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Zap, Users, Cpu } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 function FrontPage() {
   const images = [
@@ -10,62 +11,18 @@ function FrontPage() {
     "https://res.cloudinary.com/dmavfiwwt/image/upload/v1760456691/Ereck/j2x7vropiezxjcwgctgr.jpg",
   ];
 
-  const headings = ["BUILD, SIMULATE AND MASTER ELECTRICAL CORE"];
-
+  const navigate = useNavigate();
   const [current, setCurrent] = useState(0);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  const [displayedText, setDisplayedText] = useState("");
 
-  const timeoutRef = useRef(null);
-  const intervalRef = useRef(null);
-
-  // Handle window resize for mobile responsiveness
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  // Image slider interval
-  useEffect(() => {
-    intervalRef.current = setInterval(() => {
+    const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % images.length);
     }, 4000);
-
-    return () => clearInterval(intervalRef.current);
+    return () => clearInterval(interval);
   }, [images.length]);
 
-  // Typewriter effect
-  useEffect(() => {
-    let headingIndex = 0;
-    let charIndex = 0;
-
-    const typeWriter = () => {
-      const currentHeading = headings[headingIndex];
-
-      if (charIndex < currentHeading.length) {
-        setDisplayedText(currentHeading.slice(0, charIndex + 1));
-        charIndex += 1;
-        timeoutRef.current = setTimeout(typeWriter, 120);
-      } else {
-        timeoutRef.current = setTimeout(() => {
-          charIndex = 0;
-          headingIndex = (headingIndex + 1) % headings.length;
-          setDisplayedText(""); // clear text before next heading
-          typeWriter();
-        }, 1000);
-      }
-    };
-
-    typeWriter();
-
-    return () => clearTimeout(timeoutRef.current);
-  }, [headings]);
-
-  const fadeUp = {
-    hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.7 } },
-  };
+  const JoinNowBtn = () => navigate("/signup");
+  const JoinBtn = () => navigate("/event");
 
   return (
     <>
@@ -76,58 +33,67 @@ function FrontPage() {
 
       <section
         className={`relative flex flex-col md:flex-row items-center justify-center md:justify-between px-10 md:px-16 py-16 md:py-20 overflow-hidden
-        ${isMobile ? `bg-cover bg-center min-h-[60vh]` : `min-h-[90vh]`}`}
-        style={{ backgroundColor: "#000000" }}
+        ${window.innerWidth < 768 ? `bg-cover bg-center min-h-[60vh]` : `min-h-[90vh]`}`}
+        style={{
+          backgroundColor: "#000000",
+          backgroundImage:
+            window.innerWidth < 768 ? `url(${images[current]})` : "none",
+        }}
       >
-        {/* MOBILE BACKGROUND */}
-        {isMobile && (
-          <motion.div
-            key={current}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.2 }}
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${images[current]})` }}
-          />
-        )}
+        {/* LEFT SIDE - Text */}
+        <div className="flex-1 w-full max-w-full md:max-w-2xl space-y-4 md:space-y-6 z-10 flex flex-col justify-center text-center md:text-left">
 
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-          className="flex-1 w-full max-w-full md:max-w-2xl space-y-5 md:space-y-7 z-10 flex flex-col justify-center text-center md:text-left"
-        >
-          {/* TYPEWRITER HEADING */}
-          <motion.h1
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { delay: 0.2 } }}
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-yellow-400 leading-snug"
-            style={{
-              fontFamily: "Orbitron, sans-serif",
-              letterSpacing: "1px",
-              minHeight: "5.5rem",
-            }}
+          {/* ⭐⭐ YELLOW TYPEWRITER ANIMATION — FINAL VERSION ⭐⭐ */}
+          <div
+            className="font-extrabold leading-snug text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-yellow-400"
+            style={{ fontFamily: "Orbitron, sans-serif" }}
           >
-            {displayedText}
-          </motion.h1>
+            {/* Line 1 */}
+            <motion.span
+              initial={{ width: 0 }}
+              animate={{ width: "100%" }}
+              transition={{ duration: 1.4, ease: "easeInOut" }}
+              className="block overflow-hidden whitespace-nowrap"
+            >
+              BUILD, SIMULATE
+            </motion.span>
 
-          {/* Subtext */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="text-gray-300 text-sm sm:text-base md:text-lg lg:text-xl font-medium leading-relaxed px-2 sm:px-0"
-          >
-            Where technology meets creativity — explore, experiment, and engineer your path to innovation.
-          </motion.p>
+            {/* Line 2 */}
+            <motion.span
+              initial={{ width: 0 }}
+              animate={{ width: "100%" }}
+              transition={{
+                duration: 1.4,
+                ease: "easeInOut",
+                delay: 1.4,
+              }}
+              className="block overflow-hidden whitespace-nowrap mt-2"
+            >
+              AND MASTER
+            </motion.span>
 
-          {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1, duration: 0.6 }}
-            className="flex flex-wrap justify-center md:justify-start gap-6 sm:gap-8 md:gap-10 mt-6 md:mt-8 text-xs sm:text-sm md:text-base font-medium"
-          >
+            {/* Line 3 */}
+            <motion.span
+              initial={{ width: 0 }}
+              animate={{ width: "100%" }}
+              transition={{
+                duration: 1.8,
+                ease: "easeInOut",
+                delay: 2.8,
+              }}
+              className="block overflow-hidden whitespace-nowrap mt-2"
+            >
+              ELECTRICAL CORE
+            </motion.span>
+          </div>
+
+          <p className="text-gray-300 text-sm sm:text-base md:text-lg lg:text-xl font-medium leading-relaxed px-2 sm:px-0">
+            Where technology meets creativity — explore, experiment, and engineer
+            your path to innovation.
+          </p>
+
+          {/* Stats — Yellow on Mobile, Blue/Gray on Desktop */}
+          <div className="flex flex-wrap justify-center md:justify-start gap-6 sm:gap-8 md:gap-10 mt-6 md:mt-8 text-xs sm:text-sm md:text-base font-medium">
             <div className="flex items-center gap-2">
               <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-[#facc15] sm:text-[#3b82f6]" />
               <span className="text-[#facc15] sm:text-gray-300">10+ Workshops</span>
@@ -142,17 +108,17 @@ function FrontPage() {
               <Users className="w-5 h-5 sm:w-6 sm:h-6 text-[#facc15] sm:text-[#3b82f6]" />
               <span className="text-[#facc15] sm:text-gray-300">100+ Members</span>
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
-        {/* DESKTOP IMAGE SLIDER */}
-        {!isMobile && (
+        {/* RIGHT SIDE - Image Slider for Desktop */}
+        {window.innerWidth >= 768 && (
           <div className="relative flex-[0.8] w-full flex justify-center items-center mt-8 md:mt-0">
             {images.map((img, index) => (
               <motion.img
                 key={index}
                 src={img}
-                alt={`Slide ${index}`}
+                alt={`Ereck Slide ${index + 1}`}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{
                   opacity: index === current ? 1 : 0,
@@ -165,6 +131,7 @@ function FrontPage() {
           </div>
         )}
 
+        {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black/60 pointer-events-none"></div>
       </section>
     </>
