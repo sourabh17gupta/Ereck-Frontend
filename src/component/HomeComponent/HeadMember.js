@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
 
 function HeadMember() {
   const data = [
@@ -14,8 +13,6 @@ function HeadMember() {
       name: "Arushi",
     },
   ];
-
-  const [selected, setSelected] = useState(null);
 
   return (
     <div className="min-h-screen bg-black text-white py-8 px-3 sm:px-8 lg:px-12">
@@ -36,7 +33,7 @@ function HeadMember() {
         </p>
       </motion.div>
 
-      {/* FLEX Layout - Max 4 per row */}
+      {/* FLEX Layout */}
       <div className="flex flex-wrap justify-center gap-6 sm:gap-8 max-w-7xl mx-auto">
         {data.map((member, index) => (
           <motion.div
@@ -45,19 +42,20 @@ function HeadMember() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: index * 0.15 }}
             viewport={{ once: true }}
-            onHoverStart={() => setSelected(index)}
-            onHoverEnd={() => setSelected(null)}
-            animate={{
-              scale: selected === index ? 1.08 : 1,
-              boxShadow: selected === index 
-                ? "0px 20px 40px rgba(250, 204, 21, 0.5)" 
-                : "0px 4px 10px rgba(0,0,0,0.3)",
+            whileHover={{
+              scale: 1.05,
+              y: -10,
+              boxShadow: "0px 20px 40px rgba(250, 204, 21, 0.5)",
+            }}
+            whileTap={{
+              scale: 0.95,
+              boxShadow: "0px 10px 20px rgba(250, 204, 21, 0.3)",
             }}
             className="
               relative
               bg-black/70 backdrop-blur-md border border-gray-700 
-              rounded-xl overflow-hidden 
-              transition-all duration-500
+              rounded-xl overflow-hidden shadow-md 
+              transition-all duration-300
               w-[85%] 
               sm:w-[45%] 
               md:w-[30%] 
@@ -73,9 +71,8 @@ function HeadMember() {
                 alt={member.name}
                 loading="lazy"
                 className="w-full h-full object-cover object-center transform transition-transform duration-500"
-                animate={{
-                  scale: selected === index ? 1.05 : 1,
-                }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               />
             </div>
 
