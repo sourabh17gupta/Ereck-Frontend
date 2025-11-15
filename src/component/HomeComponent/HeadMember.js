@@ -4,13 +4,13 @@ function HeadMember() {
   const data = [
     {
       image:
-        "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91",
+        "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2",
       post: "President",
       name: "Vikas Saini",
     },
     {
       image:
-        "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91",
+        "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2",
       post: "Vice-President",
       name: "Arushi",
     }
