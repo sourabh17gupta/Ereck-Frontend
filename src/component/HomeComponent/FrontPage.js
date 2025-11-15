@@ -10,7 +10,7 @@ function FrontPage() {
     "https://res.cloudinary.com/dmavfiwwt/image/upload/v1760456691/Ereck/j2x7vropiezxjcwgctgr.jpg",
   ];
 
-  const headings = [" BUILD, SIMULATE AND MASTER ELECTRICAL CORE"];
+  const headings = ["BUILD, SIMULATE AND MASTER ELECTRICAL CORE"];
   
   const [current, setCurrent] = useState(0);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
