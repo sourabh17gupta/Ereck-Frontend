@@ -25,7 +25,7 @@ const Navbar = () => {
         { name: "Core", field: "core" },
         { name: "Content Writing", field: "contentwriting" },
         { name: "Design", field: "design" },
-        { name: "Management", field: "management" },
+        { name: "Management", field: "managment" },
       ],
     },
   ];
