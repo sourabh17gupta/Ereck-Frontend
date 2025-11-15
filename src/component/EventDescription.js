@@ -8,36 +8,25 @@ const EventDescription = () => {
   const event = Eventdata[id];
 
   const [visibleImages, setVisibleImages] = useState(4);
-  const [increment, setIncrement] = useState(4);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
 
+  // Handle screen resize (mobile vs desktop)
   useEffect(() => {
-    const updateCounts = () => {
-      if (window.innerWidth >= 1024) {
-        setVisibleImages(8);
-        setIncrement(8);
+    const onResize = () => {
+      const mobile = window.innerWidth < 1024;
+      setIsMobile(mobile);
+
+      if (!mobile) {
+        setVisibleImages(event.galleryImages.length); // desktop: show all
       } else {
-        setVisibleImages(4);
-        setIncrement(4);
+        setVisibleImages(4); // mobile default
       }
     };
 
-    updateCounts();
-    window.addEventListener("resize", updateCounts);
-    return () => window.removeEventListener("resize", updateCounts);
-  }, []);
-
-  useEffect(() => {
-    if (!event) return;
-
-    if (window.innerWidth >= 1024) {
-      setVisibleImages(8);
-      setIncrement(8);
-    } else {
-      setVisibleImages(4);
-      setIncrement(4);
-    }
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [id, event]);
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [event]);
 
   // Fade animation
   useEffect(() => {
@@ -61,28 +50,25 @@ const EventDescription = () => {
 
   const loadMore = () => {
     setVisibleImages((prev) =>
-      Math.min(prev + increment, event.galleryImages.length)
+      Math.min(prev + 4, event.galleryImages.length)
     );
   };
 
-  const collapseGallery = () => {
-    if (window.innerWidth >= 1024) setVisibleImages(8);
-    else setVisibleImages(4);
-  };
+  const collapse = () => setVisibleImages(4);
 
   return (
     <div className="min-h-screen bg-black text-gray-100 pb-16 px-4 sm:px-6 lg:px-20">
 
       {/* Fade Animation */}
       <style>{`
-        .fade-up { 
-          opacity: 0; 
-          transform: translateY(45px) scale(0.96);
-          transition: all 0.75s ease-out;
+        .fade-up {
+          opacity: 0;
+          transform: translateY(35px) scale(0.97);
+          transition: all 0.7s ease-out;
         }
-        .fade-up-show { 
-          opacity: 1; 
-          transform: translateY(0) scale(1); 
+        .fade-up-show {
+          opacity: 1;
+          transform: translateY(0) scale(1);
         }
       `}</style>
 
@@ -96,12 +82,12 @@ const EventDescription = () => {
         </button>
       </div>
 
-      {/* MAIN CONTENT SECTION */}
-      <div className="fade-up grid grid-cols-1 lg:grid-cols-2 gap-16 items-start mb-20">
+      {/* DESCRIPTION + IMAGE (closer spacing) */}
+      <div className="fade-up grid grid-cols-1 lg:grid-cols-2 gap-10 items-start mb-16">
 
         {/* DESCRIPTION */}
         <div className="max-w-[600px]">
-          <h1 className="text-4xl font-bold mb-6 text-yellow-500 tracking-wide leading-tight">
+          <h1 className="text-4xl font-bold mb-4 text-yellow-500 tracking-wide">
             {event.name}
           </h1>
 
@@ -116,63 +102,70 @@ const EventDescription = () => {
             rounded-2xl overflow-hidden border border-yellow-500/40 shadow-xl
             lg:max-w-[430px] lg:ml-auto
             bg-black/40 backdrop-blur-md
-            hover:shadow-yellow-500/30 hover:scale-[1.02] transition-all duration-500
+            hover:shadow-yellow-500/30 hover:scale-[1.02]
+            transition-all duration-500
           "
         >
           <img
             src={event.bannerImage}
             alt={event.name}
             loading="lazy"
-            className="w-full h-[300px] md:h-[350px] object-cover"
+            className="w-full h-[280px] md:h-[340px] object-cover"
           />
         </div>
       </div>
 
-      {/* GALLERY SECTION */}
+      {/* GALLERY */}
       {event.galleryImages?.length > 0 && (
         <>
           <h2 className="text-3xl font-semibold mb-6 text-yellow-500 fade-up tracking-wide">
             Gallery
           </h2>
 
-          {/* GRID */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 fade-up">
-            {event.galleryImages.slice(0, visibleImages).map((img, i) => (
-              <div
-                key={i}
-                className="
-                  fade-up group overflow-hidden rounded-xl 
-                  border border-yellow-500/20 bg-black/40 backdrop-blur-sm 
-                  shadow-md hover:shadow-lg 
-                  hover:border-yellow-400/80 
-                  transition-all duration-500 cursor-pointer
-                "
-              >
-                <img
-                  src={img}
-                  alt={`${event.name} ${i + 1}`}
-                  className="w-full h-40 sm:h-48 object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-              </div>
-            ))}
-          </div>
+          {/* Align gallery under BOTH sides */}
+          <div className="max-w-[1100px] mx-auto">
 
-          {/* BUTTONS */}
-          <div className="flex justify-center mt-10 fade-up">
-            {visibleImages < event.galleryImages.length ? (
-              <button
-                onClick={loadMore}
-                className="px-8 py-3 bg-yellow-500 text-black rounded-lg font-medium hover:bg-yellow-400 transition-all"
-              >
-                View More
-              </button>
-            ) : (
-              <button
-                onClick={collapseGallery}
-                className="px-8 py-3 bg-yellow-500 text-black rounded-lg font-medium hover:bg-yellow-400 transition-all"
-              >
-                View Less
-              </button>
+            {/* GRID */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-5 fade-up">
+              {event.galleryImages.slice(0, visibleImages).map((img, i) => (
+                <div
+                  key={i}
+                  className="
+                    fade-up group overflow-hidden rounded-xl 
+                    border border-yellow-500/20 bg-black/40 backdrop-blur-sm 
+                    shadow-md hover:shadow-lg 
+                    hover:border-yellow-400/80 
+                    transition-all duration-500 cursor-pointer
+                  "
+                >
+                  <img
+                    src={img}
+                    alt={`${event.name} ${i + 1}`}
+                    className="w-full h-40 sm:h-48 object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* MOBILE-ONLY VIEW MORE / LESS */}
+            {isMobile && (
+              <div className="flex justify-center mt-10 fade-up">
+                {visibleImages < event.galleryImages.length ? (
+                  <button
+                    onClick={loadMore}
+                    className="px-8 py-3 bg-yellow-500 text-black rounded-lg font-medium hover:bg-yellow-400 transition-all"
+                  >
+                    View More
+                  </button>
+                ) : (
+                  <button
+                    onClick={collapse}
+                    className="px-8 py-3 bg-yellow-500 text-black rounded-lg font-medium hover:bg-yellow-400 transition-all"
+                  >
+                    View Less
+                  </button>
+                )}
+              </div>
             )}
           </div>
         </>
