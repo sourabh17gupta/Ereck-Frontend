@@ -14,6 +14,14 @@ function HeadMember() {
     },
   ];
 
+  // Floating animation variant for mobile (continuous subtle move)
+  const floatVariant = {
+    float: {
+      y: [0, -5, 0],
+      transition: { duration: 2, repeat: Infinity, ease: "easeInOut" },
+    },
+  };
+
   return (
     <div className="min-h-screen bg-black text-white py-8 px-3 sm:px-8 lg:px-12">
       {/* Header */}
@@ -37,15 +45,21 @@ function HeadMember() {
         {data.map((member, index) => (
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: index * 0.15 }}
+            variants={floatVariant}
+            initial="float"
+            whileInView="float"
             viewport={{ once: true }}
             whileHover={{
               scale: 1.05,
               y: -5,
               boxShadow: "0px 15px 30px rgba(250, 204, 21, 0.3)",
             }}
+            whileTap={{
+              scale: 1.05,
+              y: -5,
+              boxShadow: "0px 15px 30px rgba(250, 204, 21, 0.3)",
+            }}
+            transition={{ duration: 0.4, delay: index * 0.15 }}
             className="
               relative
               bg-black/70 backdrop-blur-md border border-gray-700 
@@ -67,6 +81,7 @@ function HeadMember() {
                 loading="lazy"
                 className="w-full h-full object-cover object-center transition-transform duration-300"
                 whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 1.1 }}
               />
             </div>
 
