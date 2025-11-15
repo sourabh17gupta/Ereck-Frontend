@@ -18,6 +18,7 @@ function HeadMember() {
 
   return (
     <div className="min-h-screen bg-black text-white py-8 px-3 sm:px-8 lg:px-12">
+
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -30 }}
@@ -34,12 +35,13 @@ function HeadMember() {
         </p>
       </motion.div>
 
-      {/* Responsive Layout */}
+      {/* Responsive Layout — centered on laptop/desktop */}
       <div
         className="
           flex flex-col items-center gap-6
           sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4
           sm:gap-8 sm:px-0 max-w-7xl mx-auto
+          justify-center
         "
       >
         {data.map((member, index) => (
