@@ -27,7 +27,7 @@ const EventDescription = () => {
     return () => window.removeEventListener("resize", updateCounts);
   }, []);
 
-  // Reset on event change and scroll to top
+  // Reset view on event change
   useEffect(() => {
     if (!event) return;
     if (window.innerWidth >= 1024) {
@@ -48,7 +48,7 @@ const EventDescription = () => {
           if (entry.isIntersecting) entry.target.classList.add("fade-up-show");
         });
       },
-      { threshold: 0.2 }
+      { threshold: 0.25 }
     );
 
     document.querySelectorAll(".fade-up").forEach((el) => observer.observe(el));
@@ -73,8 +73,15 @@ const EventDescription = () => {
 
       {/* Fade-up CSS */}
       <style>{`
-        .fade-up { opacity: 0; transform: translateY(40px); transition: all 0.7s ease-out; }
-        .fade-up-show { opacity: 1; transform: translateY(0); }
+        .fade-up { 
+          opacity: 0; 
+          transform: translateY(40px) scale(0.97); 
+          transition: all 0.8s ease-out; 
+        }
+        .fade-up-show { 
+          opacity: 1; 
+          transform: translateY(0) scale(1); 
+        }
       `}</style>
 
       {/* Back Button */}
@@ -87,21 +94,23 @@ const EventDescription = () => {
         </button>
       </div>
 
-      {/* IMAGE + DESCRIPTION LAYOUT */}
+      {/* IMAGE + DESCRIPTION (Image left on desktop, top on mobile) */}
       <div className="fade-up grid grid-cols-1 lg:grid-cols-2 gap-10 items-start mb-12">
 
-        {/* IMAGE — larger height on desktop */}
-        <div className="rounded-2xl overflow-hidden lg:order-1">
+        {/* IMAGE Section */}
+        <div className="rounded-2xl overflow-hidden border border-yellow-500/40 shadow-lg lg:order-1 
+                        hover:scale-[1.03] hover:shadow-yellow-500/40 transition-all duration-500">
+
           <img
             src={event.bannerImage}
             alt={event.name}
             loading="lazy"
-            className="w-full h-80 lg:h-[450px] object-cover rounded-lg shadow-lg"
+            className="w-full h-72 sm:h-80 lg:h-[380px] object-cover rounded-lg"
           />
         </div>
 
-        {/* DESCRIPTION — limited width so it aligns cleanly */}
-        <div className="lg:order-2 max-w-[550px]">
+        {/* DESCRIPTION Section */}
+        <div className="lg:order-2 max-w-[650px]">
           <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-yellow-500 fade-up">
             {event.name}
           </h1>
@@ -123,17 +132,23 @@ const EventDescription = () => {
             {event.galleryImages.slice(0, visibleImages).map((img, i) => (
               <div
                 key={i}
-                className="overflow-hidden rounded-xl shadow-md bg-black/60 backdrop-blur-md hover:scale-105 transition-transform"
+                className="
+                  overflow-hidden rounded-xl border border-yellow-500/30
+                  bg-black/40 backdrop-blur-md shadow-md 
+                  hover:scale-105 hover:border-yellow-400 transition-all duration-500
+                  fade-up
+                "
               >
                 <img
                   src={img}
                   alt={`${event.name} ${i + 1}`}
-                  className="w-full h-48 object-cover"
+                  className="w-full h-44 sm:h-48 object-cover"
                 />
               </div>
             ))}
           </div>
 
+          {/* View More Button */}
           {visibleImages < event.galleryImages.length && (
             <div className="flex justify-center mt-6 fade-up">
               <button
