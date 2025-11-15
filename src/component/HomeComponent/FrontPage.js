@@ -13,7 +13,9 @@ function FrontPage() {
 
   const navigate = useNavigate();
   const [current, setCurrent] = useState(0);
+  const [resetType, setResetType] = useState(false);
 
+  // Image slider interval
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % images.length);
@@ -21,8 +23,19 @@ function FrontPage() {
     return () => clearInterval(interval);
   }, [images.length]);
 
-  const JoinNowBtn = () => navigate("/signup");
-  const JoinBtn = () => navigate("/event");
+  // Restart typewriter after pause
+  useEffect(() => {
+    const t = setTimeout(() => {
+      setResetType((r) => !r);
+    }, 5200);
+    return () => clearTimeout(t);
+  }, [resetType]);
+
+  const stats = [
+    { icon: <Zap />, label: "10+ Workshops" },
+    { icon: <Cpu />, label: "25+ Projects" },
+    { icon: <Users />, label: "100+ Members" },
+  ];
 
   return (
     <>
@@ -33,22 +46,22 @@ function FrontPage() {
 
       <section
         className={`relative flex flex-col md:flex-row items-center justify-center md:justify-between px-10 md:px-16 py-16 md:py-20 overflow-hidden
-        ${window.innerWidth < 768 ? `bg-cover bg-center min-h-[60vh]` : `min-h-[90vh]`}`}
+          ${window.innerWidth < 768 ? "bg-cover bg-center min-h-[60vh]" : "min-h-[90vh]"}`}
         style={{
-          backgroundColor: "#000000",
+          backgroundColor: "#000",
           backgroundImage:
             window.innerWidth < 768 ? `url(${images[current]})` : "none",
         }}
       >
-        {/* LEFT SIDE - Text */}
+        {/* LEFT SIDE */}
         <div className="flex-1 w-full max-w-full md:max-w-2xl space-y-4 md:space-y-6 z-10 flex flex-col justify-center text-center md:text-left">
 
-          {/* ⭐⭐ YELLOW TYPEWRITER ANIMATION — FINAL VERSION ⭐⭐ */}
+          {/* ⭐ TYPEWRITER — YELLOW, NO BAR, PAUSE + REPEAT ⭐ */}
           <div
-            className="font-extrabold leading-snug text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-yellow-400"
+            key={resetType}
+            className="font-extrabold text-yellow-400 leading-snug text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl"
             style={{ fontFamily: "Orbitron, sans-serif" }}
           >
-            {/* Line 1 */}
             <motion.span
               initial={{ width: 0 }}
               animate={{ width: "100%" }}
@@ -58,7 +71,6 @@ function FrontPage() {
               BUILD, SIMULATE
             </motion.span>
 
-            {/* Line 2 */}
             <motion.span
               initial={{ width: 0 }}
               animate={{ width: "100%" }}
@@ -72,7 +84,6 @@ function FrontPage() {
               AND MASTER
             </motion.span>
 
-            {/* Line 3 */}
             <motion.span
               initial={{ width: 0 }}
               animate={{ width: "100%" }}
@@ -87,38 +98,64 @@ function FrontPage() {
             </motion.span>
           </div>
 
+          {/* Paragraph */}
           <p className="text-gray-300 text-sm sm:text-base md:text-lg lg:text-xl font-medium leading-relaxed px-2 sm:px-0">
-            Where technology meets creativity — explore, experiment, and engineer
-            your path to innovation.
+            Where technology meets creativity — explore, experiment, and engineer your path to innovation.
           </p>
 
-          {/* Stats — Yellow on Mobile, Blue/Gray on Desktop */}
-          <div className="flex flex-wrap justify-center md:justify-start gap-6 sm:gap-8 md:gap-10 mt-6 md:mt-8 text-xs sm:text-sm md:text-base font-medium">
-            <div className="flex items-center gap-2">
-              <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-[#facc15] sm:text-[#3b82f6]" />
-              <span className="text-[#facc15] sm:text-gray-300">10+ Workshops</span>
-            </div>
+          {/* ⭐ FULL ANIMATION MIX FOR STATS ⭐ */}
+          <div className="flex flex-wrap justify-center md:justify-start gap-6 sm:gap-8 md:gap-10 mt-6 md:mt-8">
 
-            <div className="flex items-center gap-2">
-              <Cpu className="w-5 h-5 sm:w-6 sm:h-6 text-[#facc15] sm:text-[#3b82f6]" />
-              <span className="text-[#facc15] sm:text-gray-300">25+ Projects</span>
-            </div>
+            {stats.map((s, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 40, scale: 0.7, rotate: -10 }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  rotate: 0,
+                }}
+                transition={{
+                  delay: i * 0.3,
+                  duration: 0.8,
+                  type: "spring",
+                }}
+                whileHover={{
+                  scale: 1.12,
+                  rotate: 3,
+                  boxShadow: "0 0 12px rgba(250,204,21,0.6)",
+                }}
+                className="flex items-center gap-2 text-[#facc15] sm:text-gray-300 text-sm sm:text-base md:text-lg cursor-pointer"
+              >
+                <motion.div
+                  animate={{ rotate: [0, 10, -10, 0] }}
+                  transition={{ duration: 1.2, delay: i * 0.4 }}
+                  className="w-6 h-6"
+                >
+                  {s.icon}
+                </motion.div>
 
-            <div className="flex items-center gap-2">
-              <Users className="w-5 h-5 sm:w-6 sm:h-6 text-[#facc15] sm:text-[#3b82f6]" />
-              <span className="text-[#facc15] sm:text-gray-300">100+ Members</span>
-            </div>
+                <motion.span
+                  animate={{ opacity: [0.3, 1, 0.3, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  {s.label}
+                </motion.span>
+              </motion.div>
+            ))}
+
           </div>
         </div>
 
-        {/* RIGHT SIDE - Image Slider for Desktop */}
+        {/* RIGHT SIDE - Desktop Slider */}
         {window.innerWidth >= 768 && (
           <div className="relative flex-[0.8] w-full flex justify-center items-center mt-8 md:mt-0">
             {images.map((img, index) => (
               <motion.img
                 key={index}
                 src={img}
-                alt={`Ereck Slide ${index + 1}`}
+                alt={"Slide " + index}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{
                   opacity: index === current ? 1 : 0,
