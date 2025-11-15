@@ -11,24 +11,31 @@ function HeadMember() {
       image: "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2",
       post: "Vice-President",
       name: "Arushi",
-    }
+    },
+    {
+      image: "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2",
+      post: "Treasurer",
+      name: "Rahul",
+    },
+    {
+      image: "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2",
+      post: "Secretary",
+      name: "Neha",
+    },
+    {
+      image: "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2",
+      post: "Coordinator",
+      name: "Ankit",
+    },
   ];
 
-  // Floating animation for mobile
-  const floatVariant = {
-    float: {
-      y: [0, -8, 0],
-      transition: { duration: 2.5, repeat: Infinity, ease: "easeInOut" },
-    },
-  };
-
   return (
-    <div className="min-h-screen bg-black text-white py-12 px-4 sm:px-8 lg:px-12">
+    <div className="min-h-screen bg-black text-white py-8 px-4 sm:px-8 lg:px-12">
       {/* Header */}
       <motion.div
-        initial={{ opacity: 0, y: -40 }}
+        initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.3 }}
         viewport={{ once: true }}
         className="text-center mb-12 sm:mb-16"
       >
@@ -40,34 +47,26 @@ function HeadMember() {
         </p>
       </motion.div>
 
-      {/* Members Grid */}
+      {/* Flex Layout: max 4 cards per row */}
       <div className="flex flex-wrap justify-center gap-6 sm:gap-8 max-w-7xl mx-auto">
         {data.map((member, index) => (
           <motion.div
             key={index}
-            variants={floatVariant}
-            initial="float"
-            whileInView="float"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: index * 0.1 }}
             viewport={{ once: true }}
             whileHover={{
-              scale: 1.06,
-              y: -6,
-              boxShadow: "0px 20px 40px rgba(250, 204, 21, 0.4)",
+              scale: 1.05,
+              boxShadow: "0px 20px 30px rgba(255, 255, 0, 0.3)",
             }}
             whileTap={{
-              scale: 1.06,
-              y: -6,
-              boxShadow: "0px 20px 40px rgba(250, 204, 21, 0.4)",
+              scale: 1.05,
+              boxShadow: "0px 15px 25px rgba(255, 255, 0, 0.5)",
             }}
-            transition={{ duration: 0.4, delay: index * 0.15 }}
-            className="
-              relative
-              bg-black/70 backdrop-blur-md border border-gray-700
-              rounded-xl overflow-hidden shadow-lg
-              transition-all duration-300
-              w-[85%] sm:w-[45%] md:w-[30%] lg:w-[22%]
-              h-80 sm:h-96 flex flex-col
-            "
+            className="relative bg-black/70 backdrop-blur-md border border-gray-700 rounded-xl overflow-hidden cursor-pointer
+              h-80 flex flex-col transition-transform duration-200 ease-out
+              flex-[1_1_calc(25%-1rem)] min-w-[200px]"
           >
             {/* Image */}
             <div className="relative w-full flex-[0.7] overflow-hidden">
@@ -75,30 +74,20 @@ function HeadMember() {
                 src={member.image}
                 alt={member.name}
                 loading="lazy"
-                className="w-full h-full object-cover object-center transition-transform duration-300"
-                whileHover={{ scale: 1.12 }}
-                whileTap={{ scale: 1.12 }}
+                className="w-full h-full object-cover object-center transform transition-transform duration-300"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 1.1 }}
               />
             </div>
 
             {/* Text */}
-            <div className="p-4 sm:p-5 text-center flex flex-col justify-center items-center flex-[0.3]">
-              <motion.h2
-                initial={{ y: 20, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
-                className="text-lg sm:text-xl md:text-2xl font-semibold text-yellow-400"
-              >
+            <div className="p-4 sm:p-5 text-center relative z-10 flex flex-col justify-center items-center flex-[0.3]">
+              <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-yellow-400">
                 {member.name}
-              </motion.h2>
-              <motion.p
-                initial={{ y: 20, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
-                className="text-gray-300 mt-2 text-sm sm:text-base uppercase tracking-wide"
-              >
+              </h2>
+              <p className="text-gray-300 mt-2 text-sm sm:text-base uppercase tracking-wide">
                 {member.post}
-              </motion.p>
+              </p>
             </div>
           </motion.div>
         ))}
