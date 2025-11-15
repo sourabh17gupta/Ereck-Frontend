@@ -22,7 +22,7 @@ const EventPage = () => {
             transition={{ duration: 0.4, delay: index * 0.1 }}
             viewport={{ once: true }}
             className={`relative flex flex-col lg:flex-row items-center gap-8 rounded-2xl overflow-hidden shadow-lg bg-black/70 backdrop-blur-md border border-gray-700 transition-transform duration-300
-              ${index % 2 === 0 ? "ml-auto" : "mr-auto"}  // shift card horizontally
+              ${index % 2 === 1 ? "ml-auto" : "mr-auto"}  // shift card horizontally
               `}
             style={{ minHeight: "450px", maxWidth: "85%" }} // limit card width
           >
