@@ -19,7 +19,7 @@ function FrontPage() {
   const timeoutRef = useRef(null);
   const intervalRef = useRef(null);
 
-  // Update isMobile on resize
+  // Handle window resize for mobile responsiveness
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener("resize", handleResize);
@@ -44,16 +44,14 @@ function FrontPage() {
       const currentHeading = headings[headingIndex];
 
       if (charIndex < currentHeading.length) {
-        // Safe append using slice
         setDisplayedText(currentHeading.slice(0, charIndex + 1));
         charIndex += 1;
         timeoutRef.current = setTimeout(typeWriter, 120);
       } else {
-        // Wait before moving to next heading
         timeoutRef.current = setTimeout(() => {
           charIndex = 0;
           headingIndex = (headingIndex + 1) % headings.length;
-          setDisplayedText(""); // clear text
+          setDisplayedText(""); // clear text before next heading
           typeWriter();
         }, 1000);
       }
