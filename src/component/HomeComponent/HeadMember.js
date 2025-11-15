@@ -11,17 +11,7 @@ function HeadMember() {
       image: "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2",
       post: "Vice-President",
       name: "Arushi",
-    },
-    {
-      image: "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2",
-      post: "Treasurer",
-      name: "Rohit",
-    },
-    {
-      image: "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2",
-      post: "Secretary",
-      name: "Sneha",
-    },
+    }
   ];
 
   // Floating animation for mobile
