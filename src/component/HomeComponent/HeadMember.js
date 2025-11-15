@@ -48,8 +48,9 @@ function HeadMember() {
               boxShadow: "0px 20px 40px rgba(250, 204, 21, 0.5)",
             }}
             whileTap={{
-              scale: 0.95,
-              boxShadow: "0px 10px 20px rgba(250, 204, 21, 0.3)",
+              scale: 1.03, // scale up on mobile tap
+              backgroundColor: "rgba(250, 204, 21, 0.2)", // yellowish background glow
+              boxShadow: "0px 15px 35px rgba(250, 204, 21, 0.5)",
             }}
             className="
               relative
@@ -72,7 +73,7 @@ function HeadMember() {
                 loading="lazy"
                 className="w-full h-full object-cover object-center transform transition-transform duration-500"
                 whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileTap={{ scale: 1.03 }}
               />
             </div>
 
