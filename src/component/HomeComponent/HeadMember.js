@@ -11,22 +11,7 @@ function HeadMember() {
       image: "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2",
       post: "Vice-President",
       name: "Arushi",
-    },
-    {
-      image: "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2",
-      post: "Treasurer",
-      name: "Rahul",
-    },
-    {
-      image: "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2",
-      post: "Secretary",
-      name: "Neha",
-    },
-    {
-      image: "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2",
-      post: "Coordinator",
-      name: "Ankit",
-    },
+    }
   ];
 
   return (
