@@ -4,28 +4,16 @@ function HeadMember() {
   const data = [
     {
       image:
-        "http://res.cloudinary.com/dmavfiwwt/image/upload/v1760458130/Ereck/nvtqghbqs1u7gfz6kq0b.jpg",
+        "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91",
       post: "President",
-      name: "Krishna",
+      name: "Vikas Saini",
     },
     {
       image:
-        "http://res.cloudinary.com/dmavfiwwt/image/upload/v1760458154/Ereck/mu7np3krqoabuajwrnn9.jpg",
+        "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91",
       post: "Vice-President",
-      name: "Sourabh Gupta",
-    },
-    {
-      image:
-        "http://res.cloudinary.com/dmavfiwwt/image/upload/v1760458182/Ereck/emoq05cwllndogm4h25i.jpg",
-      post: "Secretary",
-      name: "Prateek Goyal",
-    },
-    {
-      image:
-        "http://res.cloudinary.com/dmavfiwwt/image/upload/v1760458182/Ereck/emoq05cwllndogm4h25i.jpg",
-      post: "Joint-Secretary",
-      name: "Somil",
-    },
+      name: "Arushi",
+    }
   ];
 
   return (
