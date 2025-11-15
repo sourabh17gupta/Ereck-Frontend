@@ -101,7 +101,7 @@ const EventDescription = () => {
         </div>
 
         {/* DESCRIPTION — limited width so it aligns cleanly */}
-        <div className="lg:order-2 max-w-[650px]">
+        <div className="lg:order-2 max-w-[550px]">
           <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-yellow-500 fade-up">
             {event.name}
           </h1>
