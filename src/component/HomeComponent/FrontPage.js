@@ -24,6 +24,12 @@ function FrontPage() {
   const JoinNowBtn = () => navigate("/signup");
   const JoinBtn = () => navigate("/event");
 
+  // Fade-Up Animation Variant
+  const fadeUp = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7 } },
+  };
+
   return (
     <>
       <link
@@ -31,40 +37,76 @@ function FrontPage() {
         rel="stylesheet"
       />
 
+      {/* MAIN SECTION */}
       <section
         className={`relative flex flex-col md:flex-row items-center justify-center md:justify-between px-10 md:px-16 py-16 md:py-20 overflow-hidden
         ${window.innerWidth < 768 ? `bg-cover bg-center min-h-[60vh]` : `min-h-[90vh]`}`}
         style={{
           backgroundColor: "#000000",
-          backgroundImage:
-            window.innerWidth < 768 ? `url(${images[current]})` : "none",
         }}
       >
-        {/* LEFT SIDE - Text */}
-        <div className="flex-1 w-full max-w-full md:max-w-2xl space-y-4 md:space-y-6 z-10 flex flex-col justify-center text-center md:text-left">
-          <h1
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold bg-gradient-to-r from-[#ffffff] via-[#ffffff] to-[#ffffff] text-transparent bg-clip-text leading-snug drop-shadow-[0_0_10px_rgba(250,204,21,0.3)]"
+        {/* MOBILE BACKGROUND WITH ANIMATION */}
+        {window.innerWidth < 768 && (
+          <motion.div
+            key={current}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.2 }}
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: `url(${images[current]})`,
+            }}
+          />
+        )}
+
+        {/* LEFT TEXT BLOCK */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={fadeUp}
+          className="flex-1 w-full max-w-full md:max-w-2xl space-y-5 md:space-y-7 z-10 flex flex-col justify-center text-center md:text-left"
+        >
+          {/* TYPEWRITER HEADING */}
+          <motion.h1
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: 1,
+              transition: { delay: 0.2 },
+            }}
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold bg-gradient-to-r from-white to-white text-transparent bg-clip-text leading-snug"
             style={{
               fontFamily: "Orbitron, sans-serif",
               letterSpacing: "1px",
-              textShadow:
-                "0 0 6px rgba(250,204,21,0.4), 0 0 12px rgba(250,204,21,0.3)",
             }}
           >
-            BUILD, SIMULATE <br className="hidden sm:block" /> AND MASTER{" "}
-            <br className="hidden sm:block" /> ELECTRICAL CORE
-          </h1>
+            <motion.span
+              initial={{ width: 0 }}
+              animate={{ width: "100%" }}
+              transition={{ duration: 2.3, ease: "easeInOut" }}
+              className="inline-block overflow-hidden whitespace-nowrap border-r-4 border-yellow-400 pr-2"
+            >
+              BUILD, SIMULATE AND MASTER ELECTRICAL CORE
+            </motion.span>
+          </motion.h1>
 
-          <p className="text-gray-300 text-sm sm:text-base md:text-lg lg:text-xl font-medium leading-relaxed px-2 sm:px-0">
+          {/* Subtext */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1 }}
+            className="text-gray-300 text-sm sm:text-base md:text-lg lg:text-xl font-medium leading-relaxed px-2 sm:px-0"
+          >
             Where technology meets creativity — explore, experiment, and engineer
             your path to innovation.
-          </p>
+          </motion.p>
 
-        
-
-          {/* Stats — Yellow on Mobile, Blue/Gray on Desktop */}
-          <div className="flex flex-wrap justify-center md:justify-start gap-6 sm:gap-8 md:gap-10 mt-6 md:mt-8 text-xs sm:text-sm md:text-base font-medium">
-
+          {/* Stats */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.2, duration: 0.6 }}
+            className="flex flex-wrap justify-center md:justify-start gap-6 sm:gap-8 md:gap-10 mt-6 md:mt-8 text-xs sm:text-sm md:text-base font-medium"
+          >
             <div className="flex items-center gap-2">
               <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-[#facc15] sm:text-[#3b82f6]" />
               <span className="text-[#facc15] sm:text-gray-300">
@@ -85,17 +127,17 @@ function FrontPage() {
                 100+ Members
               </span>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        {/* RIGHT SIDE - Image Slider for Desktop */}
+        {/* DESKTOP IMAGE SLIDER */}
         {window.innerWidth >= 768 && (
           <div className="relative flex-[0.8] w-full flex justify-center items-center mt-8 md:mt-0">
             {images.map((img, index) => (
               <motion.img
                 key={index}
                 src={img}
-                alt={`Ereck Slide ${index + 1}`}
+                alt={`Slide ${index}`}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{
                   opacity: index === current ? 1 : 0,
@@ -108,7 +150,7 @@ function FrontPage() {
           </div>
         )}
 
-        {/* Overlay Gradient */}
+        {/* GRADIENT OVERLAY */}
         <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black/60 pointer-events-none"></div>
       </section>
     </>
