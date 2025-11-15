@@ -2,56 +2,6 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Zap, Users, Cpu } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
-// Typewriter heading component
-const FrontPageHeading: React.FC = () => {
-  const headingLines = ["BUILD, SIMULATE", "AND MASTER", "ELECTRICAL CORE"];
-  const [currentLine, setCurrentLine] = useState(0);
-  const [typedChars, setTypedChars] = useState("");
-
-  useEffect(() => {
-    const currentText = headingLines[currentLine];
-    let charIndex = 0;
-
-    const typeInterval = setInterval(() => {
-      setTypedChars((prev) => prev + currentText[charIndex]);
-      charIndex++;
-
-      if (charIndex === currentText.length) {
-        clearInterval(typeInterval);
-
-        setTimeout(() => {
-          setTypedChars("");
-          setCurrentLine((prev) => (prev + 1) % headingLines.length);
-        }, 1500); // pause before next line
-      }
-    }, 100); // typing speed
-
-    return () => clearInterval(typeInterval);
-  }, [currentLine]);
-
-  return (
-    <div className="flex flex-col items-center md:items-start">
-      {headingLines.map((line, index) => (
-        <AnimatePresence key={index}>
-          {index === currentLine && (
-            <motion.div
-              key={line}
-              initial={{ x: "-100%", opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: "100%", opacity: 0 }}
-              transition={{ type: "spring", stiffness: 120, damping: 20 }}
-              className="text-yellow-400 font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-orbitron overflow-hidden whitespace-nowrap"
-            >
-              {typedChars}
-            </motion.div>
-          )}
-        </AnimatePresence>
-      ))}
-    </div>
-  );
-};
-
 function FrontPage() {
   const images = [
     "https://res.cloudinary.com/dmavfiwwt/image/upload/v1760456909/Ereck/duysaglegzkoflsdzayk.jpg",
