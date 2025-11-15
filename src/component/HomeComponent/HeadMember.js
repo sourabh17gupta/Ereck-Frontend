@@ -16,7 +16,6 @@ function HeadMember() {
 
   return (
     <div className="min-h-screen bg-black text-white py-8 px-3 sm:px-8 lg:px-12">
-
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -30 }}
@@ -48,9 +47,10 @@ function HeadMember() {
               boxShadow: "0px 20px 40px rgba(250, 204, 21, 0.5)",
             }}
             whileTap={{
-              scale: 1.03, // scale up on mobile tap
-              backgroundColor: "rgba(250, 204, 21, 0.2)", // yellowish background glow
-              boxShadow: "0px 15px 35px rgba(250, 204, 21, 0.5)",
+              scale: 1.05,
+              boxShadow: "0px 20px 40px rgba(250, 204, 21, 0.5)",
+              backgroundColor: "rgba(250, 204, 21, 0.15)",
+              transition: { type: "spring", stiffness: 300, damping: 20 },
             }}
             className="
               relative
@@ -73,7 +73,10 @@ function HeadMember() {
                 loading="lazy"
                 className="w-full h-full object-cover object-center transform transition-transform duration-500"
                 whileHover={{ scale: 1.15 }}
-                whileTap={{ scale: 1.10 }}
+                whileTap={{
+                  scale: 1.15,
+                  transition: { type: "spring", stiffness: 300, damping: 20 },
+                }}
               />
             </div>
 
