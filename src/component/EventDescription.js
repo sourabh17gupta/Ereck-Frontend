@@ -87,22 +87,21 @@ const EventDescription = () => {
         </button>
       </div>
 
-      {/* MOBILE: image top, description bottom 
-          DESKTOP: image left, description right */}
+      {/* IMAGE + DESCRIPTION LAYOUT */}
       <div className="fade-up grid grid-cols-1 lg:grid-cols-2 gap-10 items-start mb-12">
 
-        {/* IMAGE — left on desktop, top on mobile */}
+        {/* IMAGE — larger height on desktop */}
         <div className="rounded-2xl overflow-hidden lg:order-1">
           <img
             src={event.bannerImage}
             alt={event.name}
             loading="lazy"
-            className="w-full h-80 object-cover rounded-lg shadow-lg"
+            className="w-full h-80 lg:h-[450px] object-cover rounded-lg shadow-lg"
           />
         </div>
 
-        {/* DESCRIPTION — right on desktop */}
-        <div className="lg:order-2">
+        {/* DESCRIPTION — limited width so it aligns cleanly */}
+        <div className="lg:order-2 max-w-[650px]">
           <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-yellow-500 fade-up">
             {event.name}
           </h1>
@@ -113,7 +112,7 @@ const EventDescription = () => {
         </div>
       </div>
 
-      {/* Gallery */}
+      {/* GALLERY */}
       {event.galleryImages?.length > 0 && (
         <>
           <h2 className="text-2xl font-semibold mb-4 text-yellow-500 fade-up">
