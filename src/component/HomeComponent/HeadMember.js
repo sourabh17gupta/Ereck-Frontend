@@ -17,14 +17,14 @@ function HeadMember() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white py-8 px-3 sm:px-8 lg:px-12 flex flex-col items-center">
+    <div className="min-h-screen bg-black text-white py-8 px-3 sm:px-8 lg:px-12">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.2 }}
         viewport={{ once: true }}
-        className="text-center mb-8 lg:mb-4" // Decreased bottom margin for large screens
+        className="text-center mb-12 sm:mb-16"
       >
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-yellow-400 tracking-wide">
           Head Members
@@ -34,8 +34,14 @@ function HeadMember() {
         </p>
       </motion.div>
 
-      {/* Flex layout for cards */}
-      <div className="flex flex-wrap justify-center gap-6 sm:gap-8 w-full max-w-7xl">
+      {/* Responsive Layout */}
+      <div
+        className="
+          flex flex-col items-center gap-6
+          sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4
+          sm:gap-8 sm:px-0 max-w-7xl mx-auto
+        "
+      >
         {data.map((member, index) => (
           <motion.div
             key={index}
@@ -43,25 +49,14 @@ function HeadMember() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, delay: index * 0.15 }}
             viewport={{ once: true }}
-            whileHover={{
-              scale: 1.10,
-              boxShadow: "0 15px 30px rgba(255, 203, 67, 0.6)",
-              backgroundColor: "rgba(255, 203, 67, 0.1)",
-              transition: { duration: 0.5 } // Slower hover effect
-            }}
-            whileTap={{
-              scale: 1.10,
-              boxShadow: "0 15px 30px rgba(255, 203, 67, 0.6)",
-              backgroundColor: "rgba(255, 203, 67, 0.1)",
-              transition: { duration: 0.5 }
-            }}
-            className="relative bg-black/70 backdrop-blur-md border border-gray-700 rounded-xl overflow-hidden shadow-md 
-              transition-all duration-300 w-64 aspect-square flex flex-col cursor-pointer"
+            whileHover={{ scale: 1.05, y: -5 }}
+            className="relative bg-black/70 backdrop-blur-md border border-gray-700 rounded-xl overflow-hidden shadow-md transition-all duration-300
+              w-[80%] sm:w-full h-80 sm:h-96 flex flex-col"
           >
             {/* Hover Overlay */}
             <motion.div
-              className="absolute inset-0 pointer-events-none rounded-xl transition-opacity"
-              whileHover={{ opacity: 0.2, backgroundColor: "rgba(255, 203, 67, 0.2)" }}
+              className="absolute inset-0 bg-black/30 pointer-events-none rounded-xl transition-opacity"
+              whileHover={{ opacity: 0.5 }}
             />
 
             {/* Image */}
@@ -92,3 +87,4 @@ function HeadMember() {
 }
 
 export default HeadMember;
+
