@@ -9,6 +9,7 @@ export const getSingleTeam = async (teamName) => {
   try {
     console.log("Fetching team:", teamName);
     const response = await apiConnector("GET", `${TeamDetail_API}/${teamName}`);
+    console.log(response);
     return response?.data?.data || null;
   } catch (error) {
     console.error(`Error fetching team ${teamName}:`, error);
