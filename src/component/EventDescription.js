@@ -30,6 +30,7 @@ const EventDescription = () => {
   // Reset view on event change
   useEffect(() => {
     if (!event) return;
+
     if (window.innerWidth >= 1024) {
       setVisibleImages(8);
       setIncrement(8);
@@ -68,6 +69,14 @@ const EventDescription = () => {
     );
   };
 
+  const collapseGallery = () => {
+    if (window.innerWidth >= 1024) {
+      setVisibleImages(8);
+    } else {
+      setVisibleImages(4);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black text-gray-100 pb-12 px-4 sm:px-6 lg:px-12">
 
@@ -94,32 +103,32 @@ const EventDescription = () => {
         </button>
       </div>
 
-      {/* IMAGE + DESCRIPTION (Image left on desktop, top on mobile) */}
+      {/* IMAGE (Right side on desktop) + DESCRIPTION (Left side) */}
       <div className="fade-up grid grid-cols-1 lg:grid-cols-2 gap-10 items-start mb-12">
 
-        {/* IMAGE Section - made smaller on desktop */}
+        {/* IMAGE Section - reduced size */}
         <div
           className="
             rounded-2xl overflow-hidden border border-yellow-500/40 shadow-lg 
             hover:scale-[1.03] hover:shadow-yellow-500/40 transition-all duration-500
-            lg:max-w-[420px] lg:mx-auto
+            lg:max-w-[380px] lg:ml-auto
           "
         >
           <img
             src={event.bannerImage}
             alt={event.name}
             loading="lazy"
-            className="w-full h-72 sm:h-80 lg:h-[340px] object-cover rounded-lg"
+            className="w-full h-72 sm:h-80 lg:h-[300px] object-cover rounded-lg"
           />
         </div>
 
-        {/* DESCRIPTION Section */}
-        <div className="lg:order-2 max-w-[650px]">
+        {/* DESCRIPTION Section - reduced width */}
+        <div className="max-w-[550px] lg:pr-10">
           <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-yellow-500 fade-up">
             {event.name}
           </h1>
 
-          <p className="text-gray-300 leading-relaxed fade-up">
+          <p className="text-gray-300 leading-relaxed fade-up text-[15px] sm:text-base">
             {event.description}
           </p>
         </div>
@@ -146,23 +155,30 @@ const EventDescription = () => {
                 <img
                   src={img}
                   alt={`${event.name} ${i + 1}`}
-                  className="w-full h-44 sm:h-48 object-cover"
+                  className="w-full h-40 sm:h-44 lg:h-40 object-cover"
                 />
               </div>
             ))}
           </div>
 
-          {/* View More Button */}
-          {visibleImages < event.galleryImages.length && (
-            <div className="flex justify-center mt-6 fade-up">
+          {/* View More / View Less Buttons */}
+          <div className="flex justify-center mt-6 fade-up">
+            {visibleImages < event.galleryImages.length ? (
               <button
                 onClick={loadMore}
                 className="px-6 py-2 bg-yellow-500 text-black rounded-lg hover:bg-yellow-400 transition-colors"
               >
                 View More
               </button>
-            </div>
-          )}
+            ) : (
+              <button
+                onClick={collapseGallery}
+                className="px-6 py-2 bg-yellow-500 text-black rounded-lg hover:bg-yellow-400 transition-colors"
+              >
+                View Less
+              </button>
+            )}
+          </div>
         </>
       )}
     </div>
