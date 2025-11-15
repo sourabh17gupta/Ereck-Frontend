@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { galleryData } from "../GalleryData";
 
 export default function Gallery() {
@@ -12,12 +12,14 @@ export default function Gallery() {
   const fadeUp = {
     hidden: { opacity: 0, y: 40 },
     visible: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -40 },
   };
 
   return (
     <div className="min-h-screen bg-black py-10 px-4 md:px-12 text-yellow-400 overflow-hidden">
       <div className="max-w-7xl mx-auto">
 
+        {/* Title */}
         <motion.h1
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -27,7 +29,7 @@ export default function Gallery() {
           Event Gallery
         </motion.h1>
 
-        {/* Buttons */}
+        {/* Event Buttons */}
         <motion.div
           initial="hidden"
           animate="visible"
@@ -57,44 +59,51 @@ export default function Gallery() {
           ))}
         </motion.div>
 
-        {/* Gallery */}
-        <motion.div
-          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mt-4"
-          initial="hidden"
-          animate="visible"
-          variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
-        >
-          {images.map((img) => (
-            <motion.div
-              key={img.id}
-              className={`group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer
-                ${selectedImage === img.id
-                  ? "border-4 border-yellow-400 scale-105"
-                  : "border border-transparent"
-                }`}
-              onClick={() =>
-                setSelectedImage(selectedImage === img.id ? null : img.id)
-              }
-              variants={fadeUp}
-              whileHover={{ scale: 1.03 }}
-            >
-              <motion.img
-                src={img.src}
-                alt={img.caption}
-                loading="lazy"
-                className="w-full h-48 sm:h-60 md:h-72 object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out opacity-0"
-                onLoad={(e) => (e.target.style.opacity = 1)}
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <p className="text-yellow-300 text-center text-sm md:text-base font-medium px-3">
-                  {img.caption}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+        {/* GALLERY WITH SMOOTH TRANSITIONS */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={selectedEvent} // Key makes transition re-run on event change
+            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mt-4"
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
+          >
+            {images.map((img) => (
+              <motion.div
+                key={img.id}
+                className={`group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer
+                  ${selectedImage === img.id
+                    ? "border-4 border-yellow-400 scale-105"
+                    : "border border-transparent"
+                  }`}
+                onClick={() =>
+                  setSelectedImage(selectedImage === img.id ? null : img.id)
+                }
+                variants={fadeUp}
+                layout
+                whileHover={{ scale: 1.03 }}
+              >
+                <motion.img
+                  src={img.src}
+                  alt={img.caption}
+                  loading="lazy"
+                  className="w-full h-48 sm:h-60 md:h-72 object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out opacity-0"
+                  onLoad={(e) => (e.target.style.opacity = 1)}
+                />
+
+                {/* Hover Caption */}
+                <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <p className="text-yellow-300 text-center text-sm md:text-base font-medium px-3">
+                    {img.caption}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
 
       </div>
     </div>
   );
-              }
+}
