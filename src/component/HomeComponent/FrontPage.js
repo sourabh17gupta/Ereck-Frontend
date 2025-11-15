@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Zap, Users, Cpu } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -21,26 +21,33 @@ function FrontPage() {
     return () => clearInterval(interval);
   }, [images.length]);
 
-  // Typewriter heading texts for loop
+  // Typewriter heading
   const headings = ["BUILD, SIMULATE AND MASTER ELECTRICAL CORE"];
   const [textIndex, setTextIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState("");
+  const charIndexRef = useRef(0);
+  const timeoutRef = useRef(null);
 
   useEffect(() => {
-    let charIndex = 0;
-    const typeWriter = () => {
-      if (charIndex < headings[textIndex].length) {
-        setDisplayedText((prev) => prev + headings[textIndex][charIndex]);
-        charIndex++;
-        setTimeout(typeWriter, 100); // typing speed
+    const type = () => {
+      const currentHeading = headings[textIndex];
+      if (charIndexRef.current < currentHeading.length) {
+        setDisplayedText((prev) => prev + currentHeading[charIndexRef.current]);
+        charIndexRef.current += 1;
+        timeoutRef.current = setTimeout(type, 100);
       } else {
-        setTimeout(() => {
-          setDisplayedText(""); // reset for loop
+        // Wait 1 second, then reset
+        timeoutRef.current = setTimeout(() => {
+          setDisplayedText("");
+          charIndexRef.current = 0;
           setTextIndex((prev) => (prev + 1) % headings.length);
-        }, 1000); // 1-second delay before looping
+        }, 1000);
       }
     };
-    typeWriter();
+
+    type();
+
+    return () => clearTimeout(timeoutRef.current);
   }, [textIndex]);
 
   const fadeUp = {
@@ -60,6 +67,7 @@ function FrontPage() {
         ${window.innerWidth < 768 ? `bg-cover bg-center min-h-[60vh]` : `min-h-[90vh]`}`}
         style={{ backgroundColor: "#000000" }}
       >
+        {/* MOBILE BACKGROUND */}
         {window.innerWidth < 768 && (
           <motion.div
             key={current}
@@ -82,7 +90,11 @@ function FrontPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { delay: 0.2 } }}
             className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-yellow-400 leading-snug"
-            style={{ fontFamily: "Orbitron, sans-serif", letterSpacing: "1px" }}
+            style={{
+              fontFamily: "Orbitron, sans-serif",
+              letterSpacing: "1px",
+              minHeight: "5.5rem", // reserve space to prevent layout shift
+            }}
           >
             {displayedText}
           </motion.h1>
@@ -121,6 +133,7 @@ function FrontPage() {
           </motion.div>
         </motion.div>
 
+        {/* DESKTOP IMAGE SLIDER */}
         {window.innerWidth >= 768 && (
           <div className="relative flex-[0.8] w-full flex justify-center items-center mt-8 md:mt-0">
             {images.map((img, index) => (
