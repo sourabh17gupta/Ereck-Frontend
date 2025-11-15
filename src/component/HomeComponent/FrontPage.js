@@ -67,12 +67,6 @@ function FrontPage() {
             >
               Explore Events
             </button>
-            <button
-              onClick={JoinNowBtn}
-              className="bg-[#facc15] hover:bg-[#eab308] text-black px-6 sm:px-8 py-2 sm:py-3 rounded-xl font-semibold text-sm sm:text-base shadow-lg transition duration-300 transform hover:scale-105"
-            >
-              Join Us
-            </button>
           </div>
 
           {/* Stats */}
