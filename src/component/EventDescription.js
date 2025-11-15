@@ -75,8 +75,8 @@ const EventDescription = () => {
       <style>{`
         .fade-up { 
           opacity: 0; 
-          transform: translateY(40px) scale(0.97); 
-          transition: all 0.8s ease-out; 
+          transform: translateY(40px) scale(0.95);
+          transition: all 0.8s ease-out;
         }
         .fade-up-show { 
           opacity: 1; 
@@ -97,15 +97,19 @@ const EventDescription = () => {
       {/* IMAGE + DESCRIPTION (Image left on desktop, top on mobile) */}
       <div className="fade-up grid grid-cols-1 lg:grid-cols-2 gap-10 items-start mb-12">
 
-        {/* IMAGE Section */}
-        <div className="rounded-2xl overflow-hidden border border-yellow-500/40 shadow-lg lg:order-1 
-                        hover:scale-[1.03] hover:shadow-yellow-500/40 transition-all duration-500">
-
+        {/* IMAGE Section - made smaller on desktop */}
+        <div
+          className="
+            rounded-2xl overflow-hidden border border-yellow-500/40 shadow-lg 
+            hover:scale-[1.03] hover:shadow-yellow-500/40 transition-all duration-500
+            lg:max-w-[420px] lg:mx-auto
+          "
+        >
           <img
             src={event.bannerImage}
             alt={event.name}
             loading="lazy"
-            className="w-full h-72 sm:h-80 lg:h-[380px] object-cover rounded-lg"
+            className="w-full h-72 sm:h-80 lg:h-[340px] object-cover rounded-lg"
           />
         </div>
 
@@ -133,10 +137,10 @@ const EventDescription = () => {
               <div
                 key={i}
                 className="
+                  fade-up
                   overflow-hidden rounded-xl border border-yellow-500/30
                   bg-black/40 backdrop-blur-md shadow-md 
                   hover:scale-105 hover:border-yellow-400 transition-all duration-500
-                  fade-up
                 "
               >
                 <img
