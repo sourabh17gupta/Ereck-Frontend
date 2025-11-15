@@ -57,7 +57,7 @@ const EventDescription = () => {
   const collapse = () => setVisibleImages(4);
 
   return (
-    <div className="min-h-screen bg-black text-gray-100 pb-16 px-4 sm:px-6 lg:px-20">
+    <div className="min-h-screen bg-black text-gray-100 pb-14 px-4 sm:px-6 lg:px-20">
 
       {/* Fade Animation */}
       <style>{`
@@ -73,7 +73,7 @@ const EventDescription = () => {
       `}</style>
 
       {/* Back Button */}
-      <div className="flex justify-end mb-10 fade-up">
+      <div className="flex justify-end mb-8 fade-up">
         <button
           onClick={() => navigate(-1)}
           className="bg-yellow-500 text-black px-4 py-2 rounded-lg font-medium hover:bg-yellow-400 transition-all"
@@ -82,25 +82,15 @@ const EventDescription = () => {
         </button>
       </div>
 
-      {/* DESCRIPTION + IMAGE (closer spacing) */}
-      <div className="fade-up grid grid-cols-1 lg:grid-cols-2 gap-10 items-start mb-16">
+      {/* DESCRIPTION + IMAGE (closer spacing + mobile image on top) */}
+      <div className="fade-up grid grid-cols-1 lg:grid-cols-2 gap-6 items-start mb-12">
 
-        {/* DESCRIPTION */}
-        <div className="max-w-[600px]">
-          <h1 className="text-4xl font-bold mb-4 text-yellow-500 tracking-wide">
-            {event.name}
-          </h1>
-
-          <p className="text-gray-300 leading-relaxed text-[16px] md:text-[17px] tracking-wide">
-            {event.description}
-          </p>
-        </div>
-
-        {/* IMAGE */}
+        {/* IMAGE FIRST on MOBILE */}
         <div
           className="
+            order-1 lg:order-2
             rounded-2xl overflow-hidden border border-yellow-500/40 shadow-xl
-            lg:max-w-[430px] lg:ml-auto
+            lg:max-w-[420px] lg:ml-auto
             bg-black/40 backdrop-blur-md
             hover:shadow-yellow-500/30 hover:scale-[1.02]
             transition-all duration-500
@@ -110,23 +100,34 @@ const EventDescription = () => {
             src={event.bannerImage}
             alt={event.name}
             loading="lazy"
-            className="w-full h-[280px] md:h-[340px] object-cover"
+            className="w-full h-[260px] md:h-[340px] object-cover"
           />
+        </div>
+
+        {/* DESCRIPTION */}
+        <div className="order-2 lg:order-1 max-w-[600px]">
+          <h1 className="text-4xl font-bold mb-3 text-yellow-500 tracking-wide">
+            {event.name}
+          </h1>
+
+          <p className="text-gray-300 leading-relaxed text-[16px] md:text-[17px] tracking-wide">
+            {event.description}
+          </p>
         </div>
       </div>
 
       {/* GALLERY */}
       {event.galleryImages?.length > 0 && (
         <>
-          <h2 className="text-3xl font-semibold mb-6 text-yellow-500 fade-up tracking-wide">
+          <h2 className="text-3xl font-semibold mb-4 text-yellow-500 fade-up tracking-wide">
             Gallery
           </h2>
 
-          {/* Align gallery under BOTH sides */}
-          <div className="max-w-[1100px] mx-auto">
+          {/* Align gallery under entire section */}
+          <div className="max-w-[1050px] mx-auto">
 
             {/* GRID */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-5 fade-up">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 fade-up">
               {event.galleryImages.slice(0, visibleImages).map((img, i) => (
                 <div
                   key={i}
@@ -149,7 +150,7 @@ const EventDescription = () => {
 
             {/* MOBILE-ONLY VIEW MORE / LESS */}
             {isMobile && (
-              <div className="flex justify-center mt-10 fade-up">
+              <div className="flex justify-center mt-8 fade-up">
                 {visibleImages < event.galleryImages.length ? (
                   <button
                     onClick={loadMore}
