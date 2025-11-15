@@ -27,14 +27,14 @@ const Navbar = () => {
     },
   ];
 
-  // Add shadow and blur when scrolled
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close menus when clicking outside
+  // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -79,11 +79,12 @@ const Navbar = () => {
                   >
                     {link.name}
                     <FaChevronDown
-                      className={`text-gray-200 transition-transform duration-300 ${
-                        teamOpen ? "rotate-180 text-yellow-400" : ""
+                      className={`transition-transform duration-300 ${
+                        teamOpen ? "rotate-180 text-yellow-400" : "text-gray-200"
                       }`}
                     />
                   </button>
+
                   {teamOpen && (
                     <ul className="absolute left-0 top-full mt-2 w-52 bg-black/70 backdrop-blur-md shadow-lg rounded-lg overflow-hidden">
                       {link.dropdown.map((item) => (
@@ -112,8 +113,7 @@ const Navbar = () => {
               )
             )}
           </ul>
-
-   
+        </div> {/* ← FIXED MISSING CLOSING TAG */}
 
         {/* Mobile Menu Button */}
         <div className="md:hidden" ref={menuRef}>
@@ -134,8 +134,8 @@ const Navbar = () => {
               link.dropdown ? (
                 <li key={link.name}>
                   <button
-                    className="flex justify-between items-center w-full font-semibold hover:text-yellow-400 transition-colors"
                     onClick={() => setTeamOpen(!teamOpen)}
+                    className="flex justify-between items-center w-full font-semibold hover:text-yellow-400 transition-colors"
                   >
                     {link.name}
                     <FaChevronDown
@@ -144,6 +144,7 @@ const Navbar = () => {
                       }`}
                     />
                   </button>
+
                   {teamOpen && (
                     <ul className="pl-4 mt-2 space-y-2">
                       {link.dropdown.map((item) => (
@@ -175,8 +176,6 @@ const Navbar = () => {
                 </li>
               )
             )}
-
-      
           </ul>
         </div>
       )}
