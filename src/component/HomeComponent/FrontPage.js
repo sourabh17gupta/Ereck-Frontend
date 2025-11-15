@@ -21,6 +21,30 @@ function FrontPage() {
     return () => clearInterval(interval);
   }, [images.length]);
 
+  const JoinNowBtn = () => navigate("/signup");
+  const JoinBtn = () => navigate("/event");
+
+  // Typewriter variants
+  const container = {
+    hidden: { opacity: 1 },
+    visible: (i = 1) => ({
+      opacity: 1,
+      transition: { staggerChildren: 0.05, delayChildren: 0.05 * i },
+    }),
+  };
+
+  const child = {
+    hidden: { opacity: 0, y: 10 },
+    visible: { opacity: 1, y: 0, transition: { ease: "easeOut" } },
+  };
+
+  const typewriterText = (text: string) =>
+    text.split("").map((char, index) => (
+      <motion.span key={index} variants={child}>
+        {char}
+      </motion.span>
+    ));
+
   return (
     <>
       <link
@@ -40,70 +64,78 @@ function FrontPage() {
         {/* LEFT SIDE - Text */}
         <div className="flex-1 w-full max-w-full md:max-w-2xl space-y-4 md:space-y-6 z-10 flex flex-col justify-center text-center md:text-left">
 
-          {/* Typewriter-style Headline */}
+          {/* Typewriter Animation */}
           <motion.div
             className="font-extrabold leading-snug text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-yellow-400"
             style={{ fontFamily: "Orbitron, sans-serif" }}
+            variants={container}
+            initial="hidden"
+            animate="visible"
           >
-            {["BUILD, SIMULATE", "AND MASTER", "ELECTRICAL CORE"].map((line, i) => (
-              <motion.span
-                key={i}
-                initial={{ width: 0 }}
-                animate={{ width: "100%" }}
-                transition={{
-                  duration: 1.5,
-                  ease: "easeInOut",
-                  delay: i * 1.5 + i * 0.2, // stagger each line with a slight gap
-                  repeat: Infinity,
-                  repeatDelay: 2, // pause after one cycle
-                }}
-                className="block overflow-hidden whitespace-nowrap mt-2"
-              >
-                {line}
-              </motion.span>
-            ))}
+            {typewriterText("BUILD, SIMULATE")}
+          </motion.div>
+
+          {/* Next lines appear after delay */}
+          <motion.div
+            className="block mt-2 font-extrabold text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-yellow-400"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2, duration: 1 }}
+          >
+            AND MASTER
+          </motion.div>
+
+          <motion.div
+            className="block mt-2 font-extrabold text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-yellow-400"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 3, duration: 1 }}
+          >
+            ELECTRICAL CORE
           </motion.div>
 
           {/* Animated Paragraph */}
           <motion.p
-            className="text-gray-300 text-sm sm:text-base md:text-lg lg:text-xl font-medium leading-relaxed px-2 sm:px-0"
+            className="text-gray-300 text-sm sm:text-base md:text-lg lg:text-xl font-medium leading-relaxed px-2 sm:px-0 mt-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 5.5, duration: 1, ease: "easeOut" }}
+            transition={{ delay: 4, duration: 1, ease: "easeOut" }}
           >
             Where technology meets creativity — explore, experiment, and engineer your path to innovation.
           </motion.p>
 
           {/* Animated Stats */}
-          <motion.div
-            className="flex flex-wrap justify-center md:justify-start gap-6 sm:gap-8 md:gap-10 mt-6 md:mt-8 text-xs sm:text-sm md:text-base font-medium"
-            initial="hidden"
-            animate="visible"
-            variants={{
-              visible: {
-                transition: { staggerChildren: 0.3, delayChildren: 6.0 },
-              },
-            }}
-          >
-            {[
-              { icon: <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-[#facc15] sm:text-[#3b82f6]" />, text: "10+ Workshops" },
-              { icon: <Cpu className="w-5 h-5 sm:w-6 sm:h-6 text-[#facc15] sm:text-[#3b82f6]" />, text: "25+ Projects" },
-              { icon: <Users className="w-5 h-5 sm:w-6 sm:h-6 text-[#facc15] sm:text-[#3b82f6]" />, text: "100+ Members" },
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                className="flex items-center gap-2"
-                variants={{
-                  hidden: { opacity: 0, y: 10 },
-                  visible: { opacity: 1, y: 0 },
-                }}
-                transition={{ duration: 0.8 }}
-              >
-                {item.icon}
-                <span className="text-[#facc15] sm:text-gray-300">{item.text}</span>
-              </motion.div>
-            ))}
-          </motion.div>
+          <div className="flex flex-wrap justify-center md:justify-start gap-6 sm:gap-8 md:gap-10 mt-6 md:mt-8 text-xs sm:text-sm md:text-base font-medium">
+            <motion.div
+              className="flex items-center gap-2"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 5, duration: 0.8 }}
+            >
+              <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-[#facc15] sm:text-[#3b82f6]" />
+              <span className="text-[#facc15] sm:text-gray-300">10+ Workshops</span>
+            </motion.div>
+
+            <motion.div
+              className="flex items-center gap-2"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 5.5, duration: 0.8 }}
+            >
+              <Cpu className="w-5 h-5 sm:w-6 sm:h-6 text-[#facc15] sm:text-[#3b82f6]" />
+              <span className="text-[#facc15] sm:text-gray-300">25+ Projects</span>
+            </motion.div>
+
+            <motion.div
+              className="flex items-center gap-2"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 6, duration: 0.8 }}
+            >
+              <Users className="w-5 h-5 sm:w-6 sm:h-6 text-[#facc15] sm:text-[#3b82f6]" />
+              <span className="text-[#facc15] sm:text-gray-300">100+ Members</span>
+            </motion.div>
+          </div>
         </div>
 
         {/* RIGHT SIDE - Image Slider for Desktop */}
@@ -126,7 +158,7 @@ function FrontPage() {
           </div>
         )}
 
-        {/* Overlay Gradient */}
+        {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black/60 pointer-events-none"></div>
       </section>
     </>
