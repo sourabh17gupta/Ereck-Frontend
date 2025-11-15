@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Zap, Users, Cpu } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 function FrontPage() {
   const images = [
@@ -11,44 +10,59 @@ function FrontPage() {
     "https://res.cloudinary.com/dmavfiwwt/image/upload/v1760456691/Ereck/j2x7vropiezxjcwgctgr.jpg",
   ];
 
-  const navigate = useNavigate();
+  const headings = [" BUILD, SIMULATE AND MASTER ELECTRICAL CORE"];
+  
   const [current, setCurrent] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % images.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, [images.length]);
-
-  // Typewriter heading
-  const headings = ["BUILD, SIMULATE AND MASTER ELECTRICAL CORE"];
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [textIndex, setTextIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState("");
   const charIndexRef = useRef(0);
   const timeoutRef = useRef(null);
+  const intervalRef = useRef(null);
 
+  // Update isMobile on resize
   useEffect(() => {
-    const type = () => {
-      const currentHeading = headings[textIndex];
-      if (charIndexRef.current < currentHeading.length) {
-        setDisplayedText((prev) => prev + currentHeading[charIndexRef.current]);
-        charIndexRef.current += 1;
-        timeoutRef.current = setTimeout(type, 100);
-      } else {
-        // Wait 1 second, then reset
-        timeoutRef.current = setTimeout(() => {
-          setDisplayedText("");
-          charIndexRef.current = 0;
-          setTextIndex((prev) => (prev + 1) % headings.length);
-        }, 1000);
-      }
-    };
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-    type();
+  // Image slider interval
+  useEffect(() => {
+    intervalRef.current = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % images.length);
+    }, 4000);
 
-    return () => clearTimeout(timeoutRef.current);
-  }, [textIndex]);
+    return () => clearInterval(intervalRef.current);
+  }, [images.length]);
+
+  // Typewriter effect
+  useEffect(() => {
+  let headingIndex = 0; // track current heading locally
+  let charIndex = 0;
+
+  const typeWriter = () => {
+    const currentHeading = headings[headingIndex];
+    if (charIndex < currentHeading.length-1) {
+      setDisplayedText((prev) => prev + currentHeading[charIndex]);
+      charIndex += 1;
+      timeoutRef.current = setTimeout(typeWriter, 120);
+    } else {
+      // Wait before moving to next heading
+      timeoutRef.current = setTimeout(() => {
+        setDisplayedText("");
+        charIndex = 0;
+        headingIndex = (headingIndex + 1) % headings.length;
+        typeWriter();
+      }, 1000);
+    }
+  };
+
+  typeWriter();
+
+  return () => clearTimeout(timeoutRef.current);
+}, []);
+
 
   const fadeUp = {
     hidden: { opacity: 0, y: 40 },
@@ -64,11 +78,11 @@ function FrontPage() {
 
       <section
         className={`relative flex flex-col md:flex-row items-center justify-center md:justify-between px-10 md:px-16 py-16 md:py-20 overflow-hidden
-        ${window.innerWidth < 768 ? `bg-cover bg-center min-h-[60vh]` : `min-h-[90vh]`}`}
+        ${isMobile ? `bg-cover bg-center min-h-[60vh]` : `min-h-[90vh]`}`}
         style={{ backgroundColor: "#000000" }}
       >
         {/* MOBILE BACKGROUND */}
-        {window.innerWidth < 768 && (
+        {isMobile && (
           <motion.div
             key={current}
             initial={{ opacity: 0 }}
@@ -93,7 +107,7 @@ function FrontPage() {
             style={{
               fontFamily: "Orbitron, sans-serif",
               letterSpacing: "1px",
-              minHeight: "5.5rem", // reserve space to prevent layout shift
+              minHeight: "5.5rem",
             }}
           >
             {displayedText}
@@ -134,7 +148,7 @@ function FrontPage() {
         </motion.div>
 
         {/* DESKTOP IMAGE SLIDER */}
-        {window.innerWidth >= 768 && (
+        {!isMobile && (
           <div className="relative flex-[0.8] w-full flex justify-center items-center mt-8 md:mt-0">
             {images.map((img, index) => (
               <motion.img
@@ -142,7 +156,10 @@ function FrontPage() {
                 src={img}
                 alt={`Slide ${index}`}
                 initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: index === current ? 1 : 0, scale: index === current ? 1.05 : 0.9 }}
+                animate={{
+                  opacity: index === current ? 1 : 0,
+                  scale: index === current ? 1.05 : 0.9,
+                }}
                 transition={{ duration: 1 }}
                 className="absolute w-[80%] md:w-[90%] max-w-[550px] rounded-3xl shadow-2xl object-cover"
               />
