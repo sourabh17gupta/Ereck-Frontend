@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FaBars, FaTimes, FaChevronDown } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";   // ← ADDED useLocation
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -10,6 +10,9 @@ const Navbar = () => {
 
   const menuRef = useRef(null);
   const dropdownRef = useRef(null);
+
+  const location = useLocation();                     // ← GET CURRENT ROUTE
+  const currentPath = location.pathname;
 
   const links = [
     { name: "Home", path: "/" },
@@ -29,12 +32,10 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -50,6 +51,12 @@ const Navbar = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  // ⭐ FUNCTION TO CHECK IF LINK IS ACTIVE
+  const isActive = (path) => currentPath === path;
+
+  // ⭐ FOR TEAM pages (ex: /team/core)
+  const isTeamActive = currentPath.startsWith("/team");
 
   return (
     <nav
@@ -75,12 +82,14 @@ const Navbar = () => {
                 <li key={link.name} className="relative" ref={dropdownRef}>
                   <button
                     onClick={() => setTeamOpen((prev) => !prev)}
-                    className="cursor-pointer flex items-center gap-1 hover:text-yellow-400 transition-colors"
+                    className={`cursor-pointer flex items-center gap-1 transition-colors
+                      ${isTeamActive ? "text-yellow-400" : "hover:text-yellow-400"}`}
                   >
                     {link.name}
+
                     <FaChevronDown
                       className={`transition-transform duration-300 ${
-                        teamOpen ? "rotate-180 text-yellow-400" : "text-gray-200"
+                        teamOpen ? "rotate-180 text-yellow-400" : isTeamActive ? "text-yellow-400" : "text-gray-200"
                       }`}
                     />
                   </button>
@@ -105,7 +114,11 @@ const Navbar = () => {
                 <li key={link.name}>
                   <Link
                     to={link.path}
-                    className="hover:text-yellow-400 transition-colors"
+                    className={`transition-colors ${
+                      isActive(link.path)
+                        ? "text-yellow-400"
+                        : "hover:text-yellow-400"
+                    }`}
                   >
                     {link.name}
                   </Link>
@@ -113,7 +126,7 @@ const Navbar = () => {
               )
             )}
           </ul>
-        </div> {/* ← FIXED MISSING CLOSING TAG */}
+        </div>
 
         {/* Mobile Menu Button */}
         <div className="md:hidden" ref={menuRef}>
@@ -135,7 +148,8 @@ const Navbar = () => {
                 <li key={link.name}>
                   <button
                     onClick={() => setTeamOpen(!teamOpen)}
-                    className="flex justify-between items-center w-full font-semibold hover:text-yellow-400 transition-colors"
+                    className={`flex justify-between items-center w-full font-semibold transition-colors
+                      ${isTeamActive ? "text-yellow-400" : "hover:text-yellow-400"}`}
                   >
                     {link.name}
                     <FaChevronDown
@@ -151,7 +165,11 @@ const Navbar = () => {
                         <li key={item.field}>
                           <Link
                             to={`/team/${item.field}`}
-                            className="block hover:text-yellow-400 transition-colors"
+                            className={`block transition-colors ${
+                              currentPath === `/team/${item.field}`
+                                ? "text-yellow-400"
+                                : "hover:text-yellow-400"
+                            }`}
                             onClick={() => {
                               setMenuOpen(false);
                               setTeamOpen(false);
@@ -168,7 +186,11 @@ const Navbar = () => {
                 <li key={link.name}>
                   <Link
                     to={link.path}
-                    className="hover:text-yellow-400 transition-colors block"
+                    className={`block transition-colors ${
+                      isActive(link.path)
+                        ? "text-yellow-400"
+                        : "hover:text-yellow-400"
+                    }`}
                     onClick={() => setMenuOpen(false)}
                   >
                     {link.name}
