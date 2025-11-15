@@ -60,15 +60,7 @@ function FrontPage() {
             your path to innovation.
           </p>
 
-          {/* Buttons */}
-          <div className="flex flex-row justify-start md:justify-start gap-4 mt-4 md:mt-6 flex-wrap sm:flex-nowrap">
-            <button
-              onClick={JoinBtn}
-              className="bg-[#facc15] hover:bg-[#2563eb] text-white px-6 sm:px-8 py-2 sm:py-3 rounded-xl font-semibold text-sm sm:text-base shadow-lg transition duration-300 transform hover:scale-105"
-            >
-              Explore Events
-            </button>
-          </div>
+        
 
           {/* Stats — Yellow on Mobile, Blue/Gray on Desktop */}
           <div className="flex flex-wrap justify-center md:justify-start gap-6 sm:gap-8 md:gap-10 mt-6 md:mt-8 text-xs sm:text-sm md:text-base font-medium">
