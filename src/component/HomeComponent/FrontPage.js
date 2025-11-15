@@ -13,7 +13,9 @@ function FrontPage() {
 
   const navigate = useNavigate();
   const [current, setCurrent] = useState(0);
+  const isMobile = window.innerWidth < 768;
 
+  // Auto slide
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % images.length);
@@ -24,12 +26,6 @@ function FrontPage() {
   const JoinNowBtn = () => navigate("/signup");
   const JoinBtn = () => navigate("/event");
 
-  // Fade-Up Animation Variant
-  const fadeUp = {
-    hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.7 } },
-  };
-
   return (
     <>
       <link
@@ -39,100 +35,107 @@ function FrontPage() {
 
       {/* MAIN SECTION */}
       <section
-        className={`relative flex flex-col md:flex-row items-center justify-center md:justify-between px-10 md:px-16 py-16 md:py-20 overflow-hidden
-        ${window.innerWidth < 768 ? `bg-cover bg-center min-h-[60vh]` : `min-h-[90vh]`}`}
+        className={`relative flex flex-col md:flex-row items-center justify-center md:justify-between px-10 md:px-16 py-16 md:py-20 overflow-hidden ${
+          isMobile ? "bg-cover bg-center min-h-[60vh]" : "min-h-[90vh]"
+        }`}
         style={{
-          backgroundColor: "#000000",
+          backgroundColor: "#000",
+          backgroundImage: isMobile ? `url(${images[current]})` : "none",
         }}
       >
-        {/* MOBILE BACKGROUND WITH ANIMATION */}
-        {window.innerWidth < 768 && (
-          <motion.div
-            key={current}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.2 }}
-            className="absolute inset-0 bg-cover bg-center"
-            style={{
-              backgroundImage: `url(${images[current]})`,
-            }}
-          />
-        )}
+        {/* LEFT SIDE – TEXT */}
+        <div className="flex-1 w-full max-w-full md:max-w-2xl space-y-6 z-10 flex flex-col justify-center text-center md:text-left">
 
-        {/* LEFT TEXT BLOCK */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-          className="flex-1 w-full max-w-full md:max-w-2xl space-y-5 md:space-y-7 z-10 flex flex-col justify-center text-center md:text-left"
-        >
-          {/* TYPEWRITER HEADING */}
-          <motion.h1
-            initial={{ opacity: 0 }}
-            animate={{
-              opacity: 1,
-              transition: { delay: 0.2 },
-            }}
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold bg-gradient-to-r from-white to-white text-transparent bg-clip-text leading-snug"
-            style={{
-              fontFamily: "Orbitron, sans-serif",
-              letterSpacing: "1px",
-            }}
+          {/* FIXED TYPEWRITER HEADING */}
+          <div
+            className="font-extrabold leading-snug text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl"
+            style={{ fontFamily: "Orbitron, sans-serif" }}
           >
+            {/* Line 1 */}
             <motion.span
               initial={{ width: 0 }}
               animate={{ width: "100%" }}
-              transition={{ duration: 2.3, ease: "easeInOut" }}
-              className="inline-block overflow-hidden whitespace-nowrap border-r-4 border-yellow-400 pr-2"
+              transition={{ duration: 1.4, ease: "easeInOut" }}
+              className="block overflow-hidden whitespace-nowrap text-white border-r-4 border-yellow-400 pr-2"
             >
-              BUILD, SIMULATE AND MASTER ELECTRICAL CORE
+              BUILD, SIMULATE
             </motion.span>
-          </motion.h1>
 
-          {/* Subtext */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1 }}
-            className="text-gray-300 text-sm sm:text-base md:text-lg lg:text-xl font-medium leading-relaxed px-2 sm:px-0"
-          >
+            {/* Line 2 */}
+            <motion.span
+              initial={{ width: 0 }}
+              animate={{ width: "100%" }}
+              transition={{
+                duration: 1.4,
+                ease: "easeInOut",
+                delay: 1.4,
+              }}
+              className="block overflow-hidden whitespace-nowrap text-white border-r-4 border-yellow-400 pr-2 mt-2"
+            >
+              AND MASTER
+            </motion.span>
+
+            {/* Line 3 */}
+            <motion.span
+              initial={{ width: 0 }}
+              animate={{ width: "100%" }}
+              transition={{
+                duration: 1.8,
+                ease: "easeInOut",
+                delay: 2.8,
+              }}
+              className="block overflow-hidden whitespace-nowrap text-white border-r-4 border-yellow-400 pr-2 mt-2"
+            >
+              ELECTRICAL CORE
+            </motion.span>
+          </div>
+
+          {/* SUBTEXT */}
+          <p className="text-gray-300 text-sm sm:text-base md:text-lg lg:text-xl font-medium leading-relaxed px-2 sm:px-0">
             Where technology meets creativity — explore, experiment, and engineer
             your path to innovation.
-          </motion.p>
+          </p>
 
-          {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2, duration: 0.6 }}
-            className="flex flex-wrap justify-center md:justify-start gap-6 sm:gap-8 md:gap-10 mt-6 md:mt-8 text-xs sm:text-sm md:text-base font-medium"
-          >
+          {/* STATS */}
+          <div className="flex flex-wrap justify-center md:justify-start gap-6 sm:gap-8 md:gap-10 mt-6 text-xs sm:text-sm md:text-base font-medium">
             <div className="flex items-center gap-2">
-              <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-[#facc15] sm:text-[#3b82f6]" />
-              <span className="text-[#facc15] sm:text-gray-300">
+              <Zap
+                className={`w-6 h-6 ${
+                  isMobile ? "text-yellow-400" : "text-blue-500"
+                }`}
+              />
+              <span className={isMobile ? "text-yellow-400" : "text-gray-300"}>
                 10+ Workshops
               </span>
             </div>
 
             <div className="flex items-center gap-2">
-              <Cpu className="w-5 h-5 sm:w-6 sm:h-6 text-[#facc15] sm:text-[#3b82f6]" />
-              <span className="text-[#facc15] sm:text-gray-300">
+              <Cpu
+                className={`w-6 h-6 ${
+                  isMobile ? "text-yellow-400" : "text-blue-500"
+                }`}
+              />
+              <span className={isMobile ? "text-yellow-400" : "text-gray-300"}>
                 25+ Projects
               </span>
             </div>
 
             <div className="flex items-center gap-2">
-              <Users className="w-5 h-5 sm:w-6 sm:h-6 text-[#facc15] sm:text-[#3b82f6]" />
-              <span className="text-[#facc15] sm:text-gray-300">
+              <Users
+                className={`w-6 h-6 ${
+                  isMobile ? "text-yellow-400" : "text-blue-500"
+                }`}
+              />
+              <span className={isMobile ? "text-yellow-400" : "text-gray-300"}>
                 100+ Members
               </span>
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
-        {/* DESKTOP IMAGE SLIDER */}
-        {window.innerWidth >= 768 && (
-          <div className="relative flex-[0.8] w-full flex justify-center items-center mt-8 md:mt-0">
+        {/* RIGHT SIDE – DESKTOP SLIDER */}
+        {!isMobile && (
+          <div className="relative flex-[0.8] flex justify-center items-center mt-8 md:mt-0">
             {images.map((img, index) => (
               <motion.img
                 key={index}
