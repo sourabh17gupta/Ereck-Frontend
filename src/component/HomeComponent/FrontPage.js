@@ -1,7 +1,56 @@
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Zap, Users, Cpu } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+
+// Typewriter heading component
+const FrontPageHeading: React.FC = () => {
+  const headingLines = ["BUILD, SIMULATE", "AND MASTER", "ELECTRICAL CORE"];
+  const [currentLine, setCurrentLine] = useState(0);
+  const [typedChars, setTypedChars] = useState("");
+
+  useEffect(() => {
+    const currentText = headingLines[currentLine];
+    let charIndex = 0;
+
+    const typeInterval = setInterval(() => {
+      setTypedChars((prev) => prev + currentText[charIndex]);
+      charIndex++;
+
+      if (charIndex === currentText.length) {
+        clearInterval(typeInterval);
+
+        setTimeout(() => {
+          setTypedChars("");
+          setCurrentLine((prev) => (prev + 1) % headingLines.length);
+        }, 1500); // pause before next line
+      }
+    }, 100); // typing speed
+
+    return () => clearInterval(typeInterval);
+  }, [currentLine]);
+
+  return (
+    <div className="flex flex-col items-center md:items-start">
+      {headingLines.map((line, index) => (
+        <AnimatePresence key={index}>
+          {index === currentLine && (
+            <motion.div
+              key={line}
+              initial={{ x: "-100%", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: "100%", opacity: 0 }}
+              transition={{ type: "spring", stiffness: 120, damping: 20 }}
+              className="text-yellow-400 font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-orbitron overflow-hidden whitespace-nowrap"
+            >
+              {typedChars}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      ))}
+    </div>
+  );
+};
 
 function FrontPage() {
   const images = [
@@ -13,47 +62,13 @@ function FrontPage() {
 
   const navigate = useNavigate();
   const [current, setCurrent] = useState(0);
-  const [textIndex, setTextIndex] = useState(0);
-  const [displayedText, setDisplayedText] = useState("");
 
-  const headline = "BUILD, SIMULATE AND MASTER ELECTRICAL CORE";
-  const paragraph =
-    "Where technology meets creativity — explore, experiment, and engineer your path to innovation.";
-
-  // Image slider
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % images.length);
     }, 4000);
     return () => clearInterval(interval);
   }, [images.length]);
-
-  // Typewriter effect with loop
-  useEffect(() => {
-    let timeout: NodeJS.Timeout;
-
-    if (textIndex < headline.length + paragraph.length + 1) {
-      timeout = setTimeout(() => {
-        if (textIndex < headline.length) {
-          setDisplayedText(headline.slice(0, textIndex + 1));
-        } else {
-          const paragraphIndex = textIndex - headline.length;
-          setDisplayedText(
-            headline + "\n" + paragraph.slice(0, paragraphIndex + 1)
-          );
-        }
-        setTextIndex(textIndex + 1);
-      }, 50); // Typing speed
-    } else {
-      // Pause before looping
-      timeout = setTimeout(() => {
-        setTextIndex(0);
-        setDisplayedText("");
-      }, 2000); // 2 second pause
-    }
-
-    return () => clearTimeout(timeout);
-  }, [textIndex, headline, paragraph]);
 
   return (
     <>
@@ -71,24 +86,29 @@ function FrontPage() {
             window.innerWidth < 768 ? `url(${images[current]})` : "none",
         }}
       >
-        {/* LEFT SIDE */}
+        {/* LEFT SIDE - Text */}
         <div className="flex-1 w-full max-w-full md:max-w-2xl space-y-4 md:space-y-6 z-10 flex flex-col justify-center text-center md:text-left">
+          
+          {/* Typewriter Heading */}
+          <FrontPageHeading />
 
-          {/* Typewriter Headline + Paragraph */}
-          <pre
-            className="font-extrabold text-yellow-400 whitespace-pre-wrap text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-snug"
-            style={{ fontFamily: "Orbitron, sans-serif" }}
+          {/* Animated Paragraph */}
+          <motion.p
+            className="text-gray-300 text-sm sm:text-base md:text-lg lg:text-xl font-medium leading-relaxed px-2 sm:px-0 mt-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 5, duration: 1, ease: "easeOut" }}
           >
-            {displayedText}
-          </pre>
+            Where technology meets creativity — explore, experiment, and engineer your path to innovation.
+          </motion.p>
 
-          {/* Stats */}
+          {/* Animated Stats */}
           <div className="flex flex-wrap justify-center md:justify-start gap-6 sm:gap-8 md:gap-10 mt-6 md:mt-8 text-xs sm:text-sm md:text-base font-medium">
             <motion.div
               className="flex items-center gap-2"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.8 }}
+              transition={{ delay: 6, duration: 0.8 }}
             >
               <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-[#facc15] sm:text-[#3b82f6]" />
               <span className="text-[#facc15] sm:text-gray-300">10+ Workshops</span>
@@ -98,7 +118,7 @@ function FrontPage() {
               className="flex items-center gap-2"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.8 }}
+              transition={{ delay: 6.5, duration: 0.8 }}
             >
               <Cpu className="w-5 h-5 sm:w-6 sm:h-6 text-[#facc15] sm:text-[#3b82f6]" />
               <span className="text-[#facc15] sm:text-gray-300">25+ Projects</span>
@@ -108,7 +128,7 @@ function FrontPage() {
               className="flex items-center gap-2"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.1, duration: 0.8 }}
+              transition={{ delay: 7, duration: 0.8 }}
             >
               <Users className="w-5 h-5 sm:w-6 sm:h-6 text-[#facc15] sm:text-[#3b82f6]" />
               <span className="text-[#facc15] sm:text-gray-300">100+ Members</span>
@@ -116,14 +136,14 @@ function FrontPage() {
           </div>
         </div>
 
-        {/* RIGHT SIDE - Desktop Images */}
+        {/* RIGHT SIDE - Image Slider for Desktop */}
         {window.innerWidth >= 768 && (
           <div className="relative flex-[0.8] w-full flex justify-center items-center mt-8 md:mt-0">
             {images.map((img, index) => (
               <motion.img
                 key={index}
                 src={img}
-                alt={`Slide ${index + 1}`}
+                alt={`Ereck Slide ${index + 1}`}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{
                   opacity: index === current ? 1 : 0,
