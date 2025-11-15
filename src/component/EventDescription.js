@@ -42,6 +42,11 @@ const EventDescription = () => {
     return () => observer.disconnect();
   }, [visibleImages]);
 
+  // ⭐ NEW — Always load page from top
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   if (!event) {
     return (
       <p className="text-center mt-10 text-red-500 text-lg">Event not found.</p>
