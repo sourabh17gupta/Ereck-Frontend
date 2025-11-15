@@ -113,14 +113,7 @@ const Navbar = () => {
             )}
           </ul>
 
-        //   {/* Join Now Button */}
-        //   <Link
-        //     to="/signup"
-        //     className="px-6 py-3 bg-yellow-400 text-black font-semibold rounded-lg hover:bg-yellow-300 transition-colors"
-        //   >
-        //     Join Now
-        //   </Link>
-        // </div>
+   
 
         {/* Mobile Menu Button */}
         <div className="md:hidden" ref={menuRef}>
@@ -183,14 +176,7 @@ const Navbar = () => {
               )
             )}
 
-            // {/* Join Now Button */}
-            // <Link
-            //   to="/signup"
-            //   className="px-4 py-3 bg-yellow-400 text-black font-semibold rounded-lg text-center hover:bg-yellow-300 transition-colors mt-2"
-            //   onClick={() => setMenuOpen(false)}
-            // >
-            //   Join Now
-            // </Link>
+      
           </ul>
         </div>
       )}
