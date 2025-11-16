@@ -43,13 +43,13 @@ const Team = () => {
     );
   }
 
-  // Separate head 
+  // Head of the team
   const head = teamDetail.teamMembers.find((member) =>
     member.Position.toLowerCase().includes("head")
   );
   const members = teamDetail.teamMembers.filter((member) => member !== head);
 
-  // Group by year
+  // Group members by year
   const membersByYear = members.reduce((acc, member) => {
     if (!acc[member.Year]) acc[member.Year] = [];
     acc[member.Year].push(member);
@@ -60,10 +60,9 @@ const Team = () => {
 
   return (
     <div className="min-h-screen bg-black py-14 px-6 text-yellow-400">
-
       {/* Header */}
       <div className="text-center mb-16">
-        <h1 className="text-5xl sm:text-6xl font-extrabold tracking-wide capitalize text-yellow-400 drop-shadow-lg">
+        <h1 className="text-5xl sm:text-6xl font-extrabold tracking-wide capitalize drop-shadow-lg">
           {teamName} Team
         </h1>
       </div>
@@ -71,7 +70,7 @@ const Team = () => {
       {/* Head of the Team */}
       {head && (
         <div className="flex justify-center mb-20">
-          <div className="bg-black/80 border border-yellow-400/40 rounded-2xl p-10 flex flex-col items-center text-center shadow-xl hover:shadow-yellow-400/40 transition-all duration-300 max-w-md">
+          <div className="bg-black/80 border border-yellow-400/40 rounded-3xl p-10 flex flex-col items-center text-center shadow-xl hover:shadow-yellow-400/50 transition-all duration-300 max-w-md">
             <img
               src={head.Image}
               alt={head.name}
@@ -85,7 +84,11 @@ const Team = () => {
             <div className="flex gap-5 mt-2">
               {head.InstagramId && (
                 <a
-                  href={head.InstagramId}
+                  href={
+                    head.InstagramId.startsWith("http")
+                      ? head.InstagramId
+                      : `https://instagram.com/${head.InstagramId}`
+                  }
                   target="_blank"
                   rel="noreferrer"
                   className="text-pink-500 hover:text-pink-600 transition-colors"
@@ -95,7 +98,11 @@ const Team = () => {
               )}
               {head.LinkdinId && (
                 <a
-                  href={head.LinkdinId}
+                  href={
+                    head.LinkdinId.startsWith("http")
+                      ? head.LinkdinId
+                      : `https://linkedin.com/in/${head.LinkdinId}`
+                  }
                   target="_blank"
                   rel="noreferrer"
                   className="text-blue-500 hover:text-blue-600 transition-colors"
@@ -108,7 +115,7 @@ const Team = () => {
         </div>
       )}
 
-      {/* Members by year */}
+      {/* Members by Year */}
       {years.map((year) => {
         const yearMembers = membersByYear[year] || [];
         if (yearMembers.length === 0) return null;
@@ -119,12 +126,11 @@ const Team = () => {
               {year} Year Members
             </h2>
 
-            {/* Larger, centered grid for laptop UI */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-12 place-items-center">
               {yearMembers.map((member) => (
                 <div
                   key={member._id}
-                  className="bg-black/70 border border-yellow-400/30 rounded-2xl p-8 w-72 flex flex-col items-center text-center shadow-lg hover:shadow-yellow-400/40 transition-all"
+                  className="bg-black/70 border border-yellow-400/30 rounded-3xl p-8 w-72 flex flex-col items-center text-center shadow-lg hover:shadow-yellow-400/40 transition-all"
                 >
                   <img
                     src={member.Image}
@@ -139,7 +145,11 @@ const Team = () => {
                   <div className="flex gap-4">
                     {member.InstagramId && (
                       <a
-                        href={`https://instagram.com/${member.InstagramId}`}
+                        href={
+                          member.InstagramId.startsWith("http")
+                            ? member.InstagramId
+                            : `https://instagram.com/${member.InstagramId}`
+                        }
                         target="_blank"
                         rel="noreferrer"
                         className="text-pink-500 hover:text-pink-600 transition-colors"
@@ -149,7 +159,11 @@ const Team = () => {
                     )}
                     {member.LinkdinId && (
                       <a
-                        href={`https://linkedin.com/in/${member.LinkdinId}`}
+                        href={
+                          member.LinkdinId.startsWith("http")
+                            ? member.LinkdinId
+                            : `https://linkedin.com/in/${member.LinkdinId}`
+                        }
                         target="_blank"
                         rel="noreferrer"
                         className="text-blue-500 hover:text-blue-600 transition-colors"
