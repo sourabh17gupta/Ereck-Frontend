@@ -4,10 +4,10 @@ import LogoLoop from "./LogoLoop";
 function Sponser() {
   const sponsors = [
     { src: "https://res.cloudinary.com/dmavfiwwt/image/upload/v1760462563/Ereck/ksoxlqigisqebvsil8pp.jpg", alt: "Wayspire" },
-    { src: "http://res.cloudinary.com/dmavfiwwt/image/upload/v1760462587/Ereck/hngfh5qn4ykatyl7pu16.png", alt: "Honda" },
-    { src: "http://res.cloudinary.com/dmavfiwwt/image/upload/v1760462610/Ereck/h2guo0prhg0rpwrojihy.jpg", alt: "Unstop" },
-    { src: "http://res.cloudinary.com/dmavfiwwt/image/upload/v1760462681/Ereck/xjjrurupeodsjpyzzamt.jpg", alt: "Tata" },
-    { src: "http://res.cloudinary.com/dmavfiwwt/image/upload/v1760456870/Ereck/d2e0quhbntwohawiwm2k.jpg", alt: "Siemens" },
+    { src: "https://res.cloudinary.com/dmavfiwwt/image/upload/v1760462587/Ereck/hngfh5qn4ykatyl7pu16.png", alt: "Honda" },
+    { src: "https://res.cloudinary.com/dmavfiwwt/image/upload/v1760462610/Ereck/h2guo0prhg0rpwrojihy.jpg", alt: "Unstop" },
+    { src: "https://res.cloudinary.com/dmavfiwwt/image/upload/v1760462681/Ereck/xjjrurupeodsjpyzzamt.jpg", alt: "Tata" },
+    { src: "https://res.cloudinary.com/dmavfiwwt/image/upload/v1760456870/Ereck/d2e0quhbntwohawiwm2k.jpg", alt: "Siemens" },
   ];
 
   return (
